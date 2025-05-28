@@ -37,6 +37,7 @@ body {
     margin-top: 50px;
   }
 
+
   nav{
     display: flex;
     height: 39px;
@@ -44,7 +45,7 @@ body {
     flex-shrink: 0;
     align-self: stretch;
   } 
-
+  
   .button{
     background: none;
     border: none;
@@ -93,19 +94,22 @@ body {
     background-color: #25070a;
   }
 
-  .Title, .SubTitle {
+  .home-link, .SubTitle {
     display: inline;
     margin: 0;
 
   }
   
-  .Title {
+  .home-link{
+    color: inherit; /* יורש את צבע הטקסט הרגיל */
+    text-decoration: none;
     font-size: 40px;
     font-weight: bolder;
     color: rgb(255, 255, 255);
     letter-spacing: 2px;
     text-shadow: 0.5px 0.5px 0px #330A0E;
   }
+
   
 
   .SubTitle {
