@@ -6,9 +6,8 @@
   <link rel="stylesheet" href="contact.css" />
   <link href="https://fonts.googleapis.com/css2?family=Alef&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="contact.js"></script>
 </head>
 <body>
   <div class="Hero">
@@ -29,9 +28,94 @@
 </div>
   </div>
 
-  <div class="Content">
-    <h2>גלריית תמונות</h2>
-    <h4></h4>
+    <style>
+  
+      .container {
+        max-width: 800px;
+        margin: auto;
+        background-color: #fff;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+        margin-top: 50px;
+      }
+  
+      h1 {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+  
+      form label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+  
+      form input, form textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        font-family: inherit;
+      }
+  
+      form button {
+        background-color: #330A0E;
+        color: #fff;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 16px;
+        font: inherit;
+        
+      }
+  
+      .contact-info {
+        margin-top: 40px;
+        border-top: 1px solid #ddd;
+        padding-top: 30px;
+      }
+  
+      .contact-info p {
+        margin-bottom: 10px;
+      }
+  
+      .contact-info a {
+        color: #330A0E;
+        text-decoration: none;
+      }
+  
+      .contact-info a:hover {
+        text-decoration: underline;
+      }
+    </style>
+
+    <div class="container">
+      <h1>צור קשר</h1>
+  
+      <form id="contact-form">
+        <label for="name">שם מלא</label>
+        <input type="text" id="name" name="name" required>
+  
+        <label for="email">כתובת דוא"ל</label>
+        <input type="email" id="email" name="email" required>
+  
+        <label for="message">הודעה</label>
+        <textarea id="message" name="message" rows="5" required></textarea>
+        <button onclick="sendContactEmail(event)">שלח הודעה</button>
+      </form>
+  
+      <div class="contact-info">
+        <h2>אפשר גם לפנות אלינו ישירות:</h2>
+        <p>📧 <a href="mailto:roeyatari@gmail.com">roeyatari@gmail.com</a></p>
+        <p>📞 <a href="tel:0507339541">050-7339541</a></p>
+        <p>💬 <a href="https://wa.me/972507339541" target="_blank">שליחה ב־WhatsApp</a></p>
+      </div>
+    </div>
+  
+
   
 
   </div>
@@ -48,7 +132,7 @@
           <a href="#"><i class="fab fa-facebook-f"></i></a>
           <a href="https://wa.me/972507339541" target="_blank"> <i class="fab fa-whatsapp"></i>
   </a>
-          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.instagram.com/picture_squared2/"><i class="fab fa-instagram"></i></a>
         </div>
       </div>
   
@@ -64,8 +148,8 @@
           <h4>דפים שימושיים</h4>
           <a href="order.html">הזמנת מגנטים</a><br>
           <a href="gallery.html">גלריה</a> <br>
-          <a href="FrequentlyAskedQuestions.html">שאלות נפוצות</a> <br> 
-        </div>
+          <a href="about.html">עלינו </a> <br> 
+                </div>
         <div class="footer-column">
           <h4>צור קשר</h4>
           <a href="mailto:roeyatari@gmail.com">roeyatari@gmail.com</a><br>

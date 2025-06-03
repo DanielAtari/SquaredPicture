@@ -229,3 +229,75 @@ body {
 }
 
 
+
+.gallery-wrapper {
+  max-width: 1200px;
+  margin: auto;
+  padding: 40px 20px;
+  text-align: center;
+  line-height: 1;
+}
+
+.gallery-wrapper h1 {
+  font-size: 32px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.gallery-wrapper p {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* שלוש עמודות קבועות */
+  gap: 20px;
+}
+
+.gallery-grid img {
+  width: 100%;
+  aspect-ratio: 1 / 1; /* ריבוע */
+  object-fit: cover;   /* חותך חלק מהתמונה כדי למלא את הריבוע */
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.gallery-grid img:hover {
+  transform: scale(1.05);
+}
+
+/* מודל - פופאפ */
+.popup {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  justify-content: center;
+  align-items: center;
+padding-top: 50px;
+}
+
+/* התמונה בתוך הפופאפ */
+.popup-content {
+  max-width: 90vw;
+  max-height: 90vh;
+  width: auto;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 0 20px #fff;
+}
+
+/* כפתור סגירה */
+.close {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  color: white;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+}

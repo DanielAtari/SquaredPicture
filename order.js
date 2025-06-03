@@ -73,3 +73,24 @@ function handleDrop(event, box) {
     openCropper(file);
   }
 }
+function handlePreview() {
+  const imageElements = document.querySelectorAll('.upload-box img');
+  const images = [];
+
+  imageElements.forEach(img => {
+    if (img.src && !img.src.includes('placeholder')) {
+      images.push(img.src);
+    }
+  });
+
+  if (images.length !== 9) {
+    alert("חובה להעלות בדיוק 9 תמונות לצורך ההזמנה.");
+    return;
+  }
+
+  // ✅ שמור את התמונות בזיכרון זמני לדף הבא
+  sessionStorage.setItem("uploadedImages", JSON.stringify(images));
+
+  // ✅ עבור לעמוד הבא
+  window.location.href = "confirm.html";
+}

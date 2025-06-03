@@ -6,9 +6,6 @@
   <link rel="stylesheet" href="gallery.css" />
   <link href="https://fonts.googleapis.com/css2?family=Alef&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 </head>
 <body>
   <div class="Hero">
@@ -30,14 +27,29 @@
   </div>
 
   <div class="Content">
-    <h2>גלריית תמונות</h2>
-    <h4></h4>
+    <div class="gallery-wrapper">
+      <h1>גלריית תמונות</h1>
+      <p>הצצה למזכרות היפות שהפכו לרגעים מוחשיים ❤️</p>
   
+      <div class="gallery-grid">
+        <!-- החלף את נתיבי התמונות לפי הצורך -->
+        <img src="images/g1.jpg" alt="תמונה 1">
+        <img src="images/g2.jpg" alt="תמונה 2">
+        <img src="images/g3.jpg" alt="תמונה 3">
+        <img src="images/g4.jpg" alt="תמונה 4">
+        <img src="images/g5.jpg" alt="תמונה 5">
+        <img src="images/g6.jpg" alt="תמונה 6">
+        <img src="images/g7.jpg" alt="תמונה 7">
+        <img src="images/g8.jpg" alt="תמונה 8">
+        <img src="images/g9.jpg" alt="תמונה 8">
+
+
+      </div>
+    </div>
+  
+    
 
   </div>
-
-
-
   <footer class="site-footer">
     <div class="footer-container">
   
@@ -46,10 +58,10 @@
         <h4>תמונה בריבוע</h4>
         <p>הבית למגנטים בעיצוב אישי.<br>מהנייד – למקרר. בלי מאמץ.</p>
         <div class="social-icons">
-          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/picture_squared2/"><i class="fab fa-facebook-f"></i></a>
           <a href="https://wa.me/972507339541" target="_blank"> <i class="fab fa-whatsapp"></i>
   </a>
-          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.instagram.com/picture_squared2/"><i class="fab fa-instagram"></i></a>
         </div>
       </div>
   
@@ -65,8 +77,8 @@
           <h4>דפים שימושיים</h4>
           <a href="order.html">הזמנת מגנטים</a><br>
           <a href="gallery.html">גלריה</a> <br>
-          <a href="FrequentlyAskedQuestions.html">שאלות נפוצות</a> <br> 
-        </div>
+          <a href="about.html">עלינו </a> <br> 
+                </div>
         <div class="footer-column">
           <h4>צור קשר</h4>
           <a href="mailto:roeyatari@gmail.com">roeyatari@gmail.com</a><br>
@@ -76,7 +88,13 @@
   </footer>
 </div>
 
+<div id="popup" class="popup">
+  <div class="popup-inner">
+    <span class="close">&times;</span>
+    <img class="popup-content" id="popup-img">
+  </div>
+</div>
 
-
+  <script src="gallery.js"></script>
 </body>
 </html>

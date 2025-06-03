@@ -1,3 +1,128 @@
+
+body {
+  font-family: 'Alef', sans-serif;
+  background-color: #e7e7e4;
+  margin-top: 70px;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+}
+
+.checkout-wrapper {
+  max-width: 800px;
+  margin: 50px auto;
+  background-color: #fff;
+  padding: 40px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+}
+
+h1 {
+  font-size: 32px;
+  margin-bottom: 10px;
+  text-align: center;
+  color: #333;
+}
+
+.summary {
+  text-align: center;
+  font-size: 18px;
+  margin-bottom: 30px;
+  color: #666;
+}
+
+.form-section {
+  margin-bottom: 30px;
+}
+
+.form-section h2 {
+  font-size: 22px;
+  margin-bottom: 15px;
+  color: #444;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
+}
+
+input[type="text"],
+input[type="tel"],
+input[type="email"],
+textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-bottom: 15px;
+  font-family: 'Alef', sans-serif;
+  font-size: 16px;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.payment-box {
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+  text-align: center;
+}
+
+.price {
+  color: #d12f2f;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+  font-size: 15px;
+  color: #333;
+}
+
+.checkbox-container input {
+  margin-left: 8px;
+}
+
+.checkbox-container a {
+  color: #0077cc;
+  text-decoration: none;
+  margin-right: 4px;
+  font-family: 'Alef', sans-serif;
+
+}
+
+.checkbox-container a:hover {
+  text-decoration: underline;
+  font-family: 'Alef', sans-serif;
+
+}
+
+button {
+  background-color: #330a0e;
+  color: #fff;
+  border: none;
+  padding: 12px 25px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: 'Alef', sans-serif;
+
+}
+
+button:hover {
+  background-color: #4b0f15;
+}
+
+
 * {
   box-sizing: border-box;
 }
@@ -107,6 +232,7 @@ body {
     text-shadow: 0.5px 0.5px 0px #330A0E;
   }
 
+  
 
   .SubTitle {
     font-size: 16px;
@@ -122,25 +248,6 @@ body {
   .HeroTitle{
     padding-top:  30px;
     padding-right: 20px;}
-
-
-.Content { 
-  display: flex;
-  margin: auto;
-  margin-top: 50px;
-  margin-bottom: 25px;
-  width: 1140px;
-  padding: 30px 44px;
-  flex-direction: column;
-  text-align: center;
-  background-color: #F7F7F7;
-  line-height: 0px;
-}
-
-.Content h4 {
-  font-style: italic;
-  line-height: 0px;
-}
 
 
 .site-footer {
@@ -225,39 +332,5 @@ body {
 
 .social-icons a:hover {
   color: #ccc;
-}
-
-
-.preview-grid {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-bottom: 40px;
-  margin: auto;
-}
-
-.preview-grid img {
-  margin-top: 40px;
-  margin-bottom: 40px;
-  width: 120px;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  margin: auto;
-  gap: 15px;
-  width: 300px;
-}
-
-input {
-  padding: 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
 }
 

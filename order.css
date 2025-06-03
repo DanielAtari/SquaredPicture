@@ -235,7 +235,26 @@ body {
   background-color: #0f0304;
 }
 
+.preview-button{
+  all: unset;
+  cursor: pointer;
+  margin-top: 25px;
+  padding: 5px 15px;
+  align-items: center;
+  font-family: Alef;
+  font-size: 14px;
+  line-height: 150%;
+  color: #EFEFED;
+  display: flex;
+  margin: auto;
+  border-radius: 10px;
+  text-decoration: none;
+  background-color: #2f090d;
+}
 
+.preview-button:hover {
+  background-color: #0f0304;
+}
 
 .site-footer {
   margin-top: 50px;
