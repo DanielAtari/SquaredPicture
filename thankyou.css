@@ -239,6 +239,7 @@ body {
   max-height: 650px;
   padding: 36px 44px;
   flex-direction: row;
+  text-align: center;
   gap: 55px;
   padding: 55px 60px;
   background-color: #F7F7F7;
@@ -262,6 +263,27 @@ align-items: flex-start;
   margin: 0;
 }
 
+#thanksbtn{
+  background: black;
+  margin: 10px auto;
+  padding: 5px 15px;
+  align-items: center;
+  font-family: Alef;
+  font-size: 17px;
+  line-height: 150%;
+  color: #EFEFED;
+  display: flex;
+  border-radius: 10px;
+  text-decoration: none;
+  background-color: none;
+
+}
+
+#thanksbtn:hover {
+  color: white;
+  text-decoration: none;
+  background-color: #25070a;
+}
 
 
 
@@ -416,4 +438,6 @@ border-radius: 15px;
   .social-icons a {
     margin: 0 10px;
   }
+
+  
 }

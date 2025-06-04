@@ -7,9 +7,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Alef&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  <script src="checkout.js"></script>
-  
-</head>
+  <script src="https://www.paypal.com/sdk/js?client-id=ASTWd08J9gpf08Qc5silHrzC2PsPR3oxu1Pkk9vY54rtk4HMCdZXn44GFhREA9kBLmxq5yCzQAYsnbWS&currency=ILS"></script>
+  <script src="checkout.js" defer></script>
+  </head>
+
 <body>
 
   <div class="Hero">
@@ -19,95 +20,92 @@
       <a href="contact.html" class="button">צור קשר</a>
       <a href="order.html" id="order">להזמנה</a>
     </nav> 
-  <div class="HeroTitle">
-    <a href="index.html" class="home-link">תמונה בריבוע</a><br>
-    <h2 class="SubTitle">זיכרונות יפים עטופים במגנט.<br> 
-      כי כל תמונה ראויה למקום משלה-<br>
-       על הדלת, על המקרר,
-    או סתם בזווית העין <br>
-     שתעשה לכם חיוך.</h2>
-
-</div>
-</div>
-
-
-
-<div class="checkout-wrapper">
-  <h1>סיום ההזמנה</h1>
-  <p class="summary">ההזמנה שלך כוללת 9 תמונות מודפסות באיכות גבוהה כמגנטים<br> בגודל 6.5/6.5 ס״מ</p>
-
-  <div class="form-section">
-    <h2>פרטי משלוח</h2>
-    <label for="full-name">שם מלא:</label>
-    <input type="text" id="full-name" placeholder="שם מלא">
-
-    <label for="address">כתובת מלאה:</label>
-    <input type="text" id="address" placeholder="רחוב, מספר, עיר, מיקוד">
-
-    <label for="phone">מספר טלפון:</label>
-    <input type="tel" id="phone" placeholder="050-1234567">
+    <div class="HeroTitle">
+      <a href="index.html" class="home-link">תמונה בריבוע</a><br>
+      <h2 class="SubTitle">זיכרונות יפים עטופים במגנט.<br> 
+        כי כל תמונה ראויה למקום משלה-<br>
+        על הדלת, על המקרר,
+        או סתם בזווית העין <br>
+        שתעשה לכם חיוך.</h2>
+    </div>
   </div>
 
-  <div class="form-section">
-    <h2>פרטי יצירת קשר</h2>
-    <label for="email">דוא"ל:</label>
-    <input type="email" id="email" placeholder="example@email.com">
+  <div class="checkout-wrapper">
+    <h1>סיום ההזמנה</h1>
+    <p class="summary">ההזמנה שלך כוללת 9 תמונות מודפסות באיכות גבוהה כמגנטים<br> בגודל 6.5/6.5 ס״מ</p>
 
-    <label for="notes">הערות להזמנה:</label>
-    <textarea id="notes" placeholder="..."></textarea>
-  </div>
+    <div class="form-section">
+      <h2>פרטי משלוח</h2>
+      <label for="full-name">שם מלא:</label>
+      <input type="text" id="full-name" placeholder="שם מלא">
 
-  <div class="payment-box">
-    <h2>סכום לתשלום: <span class="price">₪129</span></h2>
+      <label for="address">כתובת מלאה:</label>
+      <input type="text" id="address" placeholder="רחוב, מספר, עיר, מיקוד">
 
-    <label class="checkbox-container">
-      <input type="checkbox" id="terms-checkbox">
-      <span class="checkmark"></span>
-      אני מאשר שקראתי את <a href="terms.html" target="_blank">תנאי השימוש</a>
-    </label>
-
-    <button onclick="handlePayment()">בצע תשלום</button>
-  </div>
-</div>
-
-<footer class="site-footer">
-  <div class="footer-container">
-
-    <!-- 1. עמודת מותג – בצד ימין -->
-    <div class="footer-column brand">
-      <h4>תמונה בריבוע</h4>
-      <p>הבית למגנטים בעיצוב אישי.<br>מהנייד – למקרר. בלי מאמץ.</p>
-      <div class="social-icons">
-        <a href="#"><i class="fab fa-facebook-f"></i></a>
-        <a href="https://wa.me/972507339541" target="_blank"> <i class="fab fa-whatsapp"></i>
-</a>
-        <a href="https://www.instagram.com/picture_squared2/"><i class="fab fa-instagram"></i></a>
-      </div>
+      <label for="phone">מספר טלפון:</label>
+      <input type="tel" id="phone" placeholder="050-1234567">
     </div>
 
-    <!-- 2. עמודות שמאל – כולן עטופות יחד -->
-    <div class="footer-columns-left">
-      <div class="footer-column">
-        <h4>מידע משפטי</h4>
-        <a href="privacy.html">מדיניות פרטיות</a><br>
-        <a href="terms.html">תנאי שימוש</a> <br>
-        <a href="paymentsecurity.html">אבטחת תשלום</a>  <br> 
-         </div>
-      <div class="footer-column">
-        <h4>דפים שימושיים</h4>
-        <a href="order.html">הזמנת מגנטים</a><br>
-        <a href="gallery.html">גלריה</a> <br>
-        <a href="about.html">עלינו </a> <br> 
-            </div>
-      <div class="footer-column">
-        <h4>צור קשר</h4>
-        <a href="mailto:roeyatari@gmail.com">roeyatari@gmail.com</a><br>
-        <a href="https://wa.me/972507339541">050-7339541</a><br>
-      </div> <!-- סוגר את .footer-columns-left -->
-    </div> <!-- סוגר את .footer-container -->
-</footer>
+    <div class="form-section">
+      <h2>פרטי יצירת קשר</h2>
+      <label for="email">דוא"ל:</label>
+      <input type="email" id="email" placeholder="example@email.com">
 
-<!-- ואז את הקובץ שלך שמכיל את handlePayment -->
+      <label for="notes">הערות להזמנה:</label>
+      <textarea id="notes" placeholder="..."></textarea>
+    </div>
+
+    <div class="payment-box">
+      <h2>סכום לתשלום: <span class="price">₪129</span></h2>
+
+      <label class="checkbox-container">
+        <input type="checkbox" id="terms-checkbox">
+        <span class="checkmark"></span>
+        אני מאשר שקראתי את <a href="terms.html" target="_blank">תנאי השימוש</a>
+      </label>
+
+      <button id="continue-button">המשך לתשלום</button>
+      <div id="paypal-wrapper" style="display: none;">
+        <div id="paypal-button-container"></div>
+      </div>
+      
+      <div id="loader" class="loader">🚚 שולח את ההזמנה...</div>
+
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-column brand">
+        <h4>תמונה בריבוע</h4>
+        <p>הבית למגנטים בעיצוב אישי.<br>מהנייד – למקרר. בלי מאמץ.</p>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://wa.me/972507339541" target="_blank"><i class="fab fa-whatsapp"></i></a>
+          <a href="https://www.instagram.com/picture_squared2/"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+      <div class="footer-columns-left">
+        <div class="footer-column">
+          <h4>מידע משפטי</h4>
+          <a href="privacy.html">מדיניות פרטיות</a><br>
+          <a href="terms.html">תנאי שימוש</a><br>
+          <a href="paymentsecurity.html">אבטחת תשלום</a>
+        </div>
+        <div class="footer-column">
+          <h4>דפים שימושיים</h4>
+          <a href="order.html">הזמנת מגנטים</a><br>
+          <a href="gallery.html">גלריה</a><br>
+          <a href="about.html">עלינו</a>
+        </div>
+        <div class="footer-column">
+          <h4>צור קשר</h4>
+          <a href="mailto:roeyatari@gmail.com">roeyatari@gmail.com</a><br>
+          <a href="https://wa.me/972507339541">050-7339541</a>
+        </div>
+      </div>
+    </div>
+  </footer>
 
 </body>
 </html>
