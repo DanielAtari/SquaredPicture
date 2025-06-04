@@ -69,6 +69,8 @@ async function prepareOrder() {
       image9: uploadedUrls[8]
     };
 
+    sessionStorage.setItem("order_price", params.price);
+
     await emailjs.send("service_kjsnnck", "template_xtvgubk", params);
     console.log("📬 מייל נשלח בהצלחה");
 
@@ -83,13 +85,16 @@ async function prepareOrder() {
   }
 }
 
-// 🔘 טעינת כפתור פייפאל מראש (לא מוצג עדיין)
+// 🔘 טעינת כפתור פייפאל מראש
 if (typeof paypal !== 'undefined') {
   paypal.Buttons({
     createOrder: function (data, actions) {
+      const orderPrice = sessionStorage.getItem("order_price") || '129.00';
       return actions.order.create({
         purchase_units: [{
-          amount: { value: '129.00' }
+          amount: {
+            value: orderPrice.toString()
+          }
         }]
       });
     },
