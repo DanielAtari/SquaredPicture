@@ -19,6 +19,7 @@ async function uploadToCloudinary(base64) {
 }
 
 // 📨 שליחת פרטי הזמנה במייל
+// 📨 שליחת פרטי הזמנה במייל
 async function prepareOrder() {
   document.body.style.cursor = "wait";
 
@@ -28,14 +29,6 @@ async function prepareOrder() {
     const phone = document.getElementById("phone")?.value.trim() || "";
     const email = document.getElementById("email")?.value.trim() || "";
     const notes = document.getElementById("notes")?.value.trim() || "";
-
-    if (!sessionStorage.getItem("uploadedImages")) {
-      const dummyImages = [];
-      for (let i = 1; i <= 9; i++) {
-        dummyImages.push(`https://picsum.photos/seed/${i}/300/300`);
-      }
-      sessionStorage.setItem("uploadedImages", JSON.stringify(dummyImages));
-    }
 
     const uploadedBase64s = JSON.parse(sessionStorage.getItem("uploadedImages")) || [];
 
@@ -84,6 +77,7 @@ async function prepareOrder() {
     document.body.style.cursor = "default";
   }
 }
+
 
 // 🔘 טעינת כפתור פייפאל מראש
 if (typeof paypal !== 'undefined') {
