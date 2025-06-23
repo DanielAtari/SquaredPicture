@@ -373,47 +373,76 @@ border-radius: 15px;
     background-color: #0f0304;
   }
 
-  /* עיצוב רגיל */
-.site-footer {
-  background-color: #111;
-  color: white;
-  padding: 40px 60px;
-}
-
-.footer-container {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 40px;
-}
-
-.footer-column {
-  min-width: 150px;
-}
-
-/* מסכים קטנים */
-@media (max-width: 768px) {
-  .footer-container {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+  .site-footer {
+    margin-top: 50px;
+    width: 100%; /* הרקע השחור פרוש על כל הרוחב */
+    background-color: #090f11;
+    color: whitesmoke;
+    border-top: 3px solid #ffffff;
+    padding: 0px; /* בלי padding פנימי */
+    direction: rtl;
+    white-space: nowrap;
   }
-
+  
+  .footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    max-width: 1140px;  /* מתואם לשאר העמוד */
+    width: 100%;
+    margin: auto;
+    padding: 40px 20px; /* קצת ריווח פנימי */
+    box-sizing: border-box;
+    direction: rtl;
+  }
+  
   .footer-columns-left {
     display: flex;
-    flex-direction: column;
-    gap: 20px;
+    gap: 100px;
   }
-
+  
   .footer-column {
-    width: 100%;
+    flex: 1 1 200px;
+    margin: 0px 0px 30px 0px;
   }
-
-  .brand {
-    margin-bottom: 30px;
+  
+  .footer-column h4 {
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: whitesmoke;
   }
-
+  
+  .footer-column a,
+  .footer-column p {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: normal;
+    display: inline-block;
+    margin-bottom: 10px;
+    transition: color 0.3s;
+    white-space: nowrap;
+  }
+  
+  .footer-column a:hover {
+    color: #ccc;
+  }
+  
+  .footer-column.brand p {
+    font-size: 13px;
+    margin-bottom: 10px;
+    align-items: start;
+  }
+  
   .social-icons a {
-    margin: 0 10px;
+    margin-left: 10px;
+    color: white;
+    font-size: 18px;
+    transition: color 0.3s;
   }
-}
+  
+  .social-icons a:hover {
+    color: #ccc;
+  }
+  
