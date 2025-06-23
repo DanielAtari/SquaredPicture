@@ -1,4 +1,5 @@
-/* בסיס - כללי */
+/* ניקוי גרסת CSS שלא משתמשת ברספונסיביות */
+
 * {
   box-sizing: border-box;
 }
@@ -10,9 +11,9 @@ body {
   display: flex;
   flex-direction: column;
   margin: auto;
+  width: 1140px;
 }
 
-/* טיפוגרפיה */
 h3 {
   color: #330A0E;
   font-weight: normal;
@@ -23,7 +24,6 @@ h4 {
   font-weight: normal;
 }
 
-/* אזור Hero */
 .Hero {
   display: flex;
   margin: auto;
@@ -44,7 +44,6 @@ h4 {
   padding-right: 20px;
 }
 
-/* ניווט */
 nav {
   display: flex;
   height: 39px;
@@ -96,7 +95,6 @@ nav {
   background-color: #25070a;
 }
 
-/* טקסט ראשי */
 .home-link, .SubTitle {
   display: inline;
   margin: 0;
@@ -120,7 +118,6 @@ nav {
   text-shadow: 0.5px 0.5px 2px #240105;
 }
 
-/* אזור תוכן */
 .Content {
   display: flex;
   margin: auto;
@@ -140,7 +137,6 @@ nav {
   letter-spacing: 0.5px;
 }
 
-/* גלריית תמונות */
 .Pictures {
   display: flex;
   margin: auto;
@@ -164,7 +160,6 @@ nav {
   line-height: 0.7;
 }
 
-/* אזור טקסט ותמונה */
 .container {
   display: flex;
   justify-content: space-evenly;
@@ -259,7 +254,6 @@ nav {
   background-color: #0f0304;
 }
 
-/* פוטר */
 .site-footer {
   margin-top: 50px;
   width: 100%;
@@ -331,114 +325,4 @@ nav {
   color: #ccc;
 }
 
-/* רספונסיביות */
-@media (max-width: 768px) {
-  body {
-    margin-top: 20px;
-    padding: 0 10px;
-  }
-
-  .Hero, .Content, .container {
-    width: 100%;
-    max-width: 100%;
-    padding: 10px;
-    gap: 10px;
-    height: auto;
-  }
-
-  .Pictures {
-    justify-content: space-between;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-
-  .Pictures img {
-    width: 100%;
-    max-width: 300px;
-    height: auto;
-    margin-bottom: 10px;
-  }
-
-  .image-box {
-    max-width: 50%;
-  }
-
-  .text-box h2 {
-    font-size: clamp(22px, 5vw, 36px);
-  }
-
-  .text-box h3 {
-    font-size: clamp(16px, 4vw, 20px);
-  }
-
-  nav {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-  }
-
-  .button, #order {
-    font-size: 15px;
-    padding: 8px 12px;
-    margin-right: 10px;
-  }
-
-  .site-footer {
-    padding: 15px;
-    white-space: normal;
-  }
-
-  .footer-container {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 30px;
-  }
-
-  .footer-columns-left {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 40px;
-  }
-
-  .footer-column {
-    min-width: 120px;
-    text-align: center;
-  }
-
-  .footer-column a, .footer-column p {
-    white-space: normal;
-  }
-}
-
-@media (max-width: 480px) {
-  .container {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 20px;
-  }
-
-  .image-box {
-    max-width: 100%;
-    margin-bottom: 20px;
-  }
-
-  .text-box {
-    width: 100%;
-  }
-
-  .Hbutton {
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    margin-top: 30px;
-  }
-
-  .Hbutton .outline, .Hbutton .solid {
-    width: 100%;
-    max-width: 300px;
-    justify-content: center;
-  }
-}
+/* סיום */
