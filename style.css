@@ -1,4 +1,4 @@
-/* --- בסיס --- */
+/* בסיס - כללי */
 * {
   box-sizing: border-box;
 }
@@ -12,16 +12,18 @@ body {
   margin: auto;
 }
 
-h4 {
-  color: #828282;
-  font-weight: normal;
-}
-
+/* טיפוגרפיה */
 h3 {
   color: #330A0E;
   font-weight: normal;
 }
 
+h4 {
+  color: #828282;
+  font-weight: normal;
+}
+
+/* אזור Hero */
 .Hero {
   display: flex;
   margin: auto;
@@ -37,6 +39,12 @@ h3 {
   margin-top: 50px;
 }
 
+.HeroTitle {
+  padding-top: 30px;
+  padding-right: 20px;
+}
+
+/* ניווט */
 nav {
   display: flex;
   height: 39px;
@@ -88,6 +96,7 @@ nav {
   background-color: #25070a;
 }
 
+/* טקסט ראשי */
 .home-link, .SubTitle {
   display: inline;
   margin: 0;
@@ -111,11 +120,7 @@ nav {
   text-shadow: 0.5px 0.5px 2px #240105;
 }
 
-.HeroTitle {
-  padding-top: 30px;
-  padding-right: 20px;
-}
-
+/* אזור תוכן */
 .Content {
   display: flex;
   margin: auto;
@@ -135,6 +140,7 @@ nav {
   letter-spacing: 0.5px;
 }
 
+/* גלריית תמונות */
 .Pictures {
   display: flex;
   margin: auto;
@@ -158,6 +164,7 @@ nav {
   line-height: 0.7;
 }
 
+/* אזור טקסט ותמונה */
 .container {
   display: flex;
   justify-content: space-evenly;
@@ -252,6 +259,7 @@ nav {
   background-color: #0f0304;
 }
 
+/* פוטר */
 .site-footer {
   margin-top: 50px;
   width: 100%;
@@ -283,8 +291,6 @@ nav {
 .footer-column {
   flex: 1 1 200px;
   margin: 30px 0px 50px 0px;
-  min-width: 120px;
-  text-align: center;
 }
 
 .footer-column h4 {
@@ -302,7 +308,7 @@ nav {
   display: inline-block;
   margin-bottom: 10px;
   transition: color 0.3s;
-  white-space: normal;
+  white-space: nowrap;
 }
 
 .footer-column a:hover {
@@ -325,16 +331,14 @@ nav {
   color: #ccc;
 }
 
-/* --- רספונסיביות --- */
+/* רספונסיביות */
 @media (max-width: 768px) {
   body {
     margin-top: 20px;
     padding: 0 10px;
   }
 
-  .Hero,
-  .Content,
-  .container {
+  .Hero, .Content, .container {
     width: 100%;
     max-width: 100%;
     padding: 10px;
@@ -356,12 +360,7 @@ nav {
   }
 
   .image-box {
-    max-width: 100%;
-    margin-bottom: 20px;
-  }
-
-  .text-box {
-    width: 100%;
+    max-width: 50%;
   }
 
   .text-box h2 {
@@ -378,8 +377,7 @@ nav {
     gap: 10px;
   }
 
-  .button,
-  #order {
+  .button, #order {
     font-size: 15px;
     padding: 8px 12px;
     margin-right: 10px;
@@ -405,8 +403,12 @@ nav {
   }
 
   .footer-column {
-    width: 100%;
-    min-width: 130px;
+    min-width: 120px;
+    text-align: center;
+  }
+
+  .footer-column a, .footer-column p {
+    white-space: normal;
   }
 }
 
@@ -418,6 +420,15 @@ nav {
     padding: 20px;
   }
 
+  .image-box {
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .text-box {
+    width: 100%;
+  }
+
   .Hbutton {
     flex-direction: column;
     align-items: center;
@@ -425,21 +436,9 @@ nav {
     margin-top: 30px;
   }
 
-  .Hbutton .outline,
-  .Hbutton .solid {
+  .Hbutton .outline, .Hbutton .solid {
     width: 100%;
     max-width: 300px;
     justify-content: center;
-  }
-
-  .footer-container,
-  .footer-columns-left {
-    flex-direction: column;
-    gap: 20px;
-    align-items: flex-start;
-  }
-
-  .footer-column {
-    width: 100%;
   }
 }
