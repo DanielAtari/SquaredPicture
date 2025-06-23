@@ -68,7 +68,69 @@ body {
   }
 
 
+  .container {
+    max-width: 800px;
+    margin: auto;
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
+  }
 
+  h1 {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+
+  form input, form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-family: inherit;
+  }
+
+  form button {
+    background-color: #330A0E;
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font: inherit;
+    
+  }
+
+  .contact-info {
+    margin-top: 40px;
+    border-top: 1px solid #ddd;
+    padding-top: 30px;
+  }
+
+  .contact-info p {
+    margin-bottom: 10px;
+  }
+
+  .contact-info a {
+    color: #330A0E;
+    text-decoration: none;
+  }
+
+  .contact-info a:hover {
+    text-decoration: underline;
+  }
+
+
+  
   #order{
     background: black;
     margin-right: 30px;;
