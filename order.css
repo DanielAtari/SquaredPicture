@@ -255,27 +255,27 @@ body {
 .preview-button:hover {
   background-color: #0f0304;
 }
+
 .site-footer {
   margin-top: 50px;
-  width: 100%; /* הרקע השחור פרוש על כל הרוחב */
+  width: 100%;
   background-color: #090f11;
   color: whitesmoke;
   border-top: 3px solid #ffffff;
-  padding: 0px; /* בלי padding פנימי */
+  padding: 0px 90px;
   direction: rtl;
   white-space: nowrap;
 }
+
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css');
 
 .footer-container {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   flex-wrap: wrap;
-  max-width: 1140px;  /* מתואם לשאר העמוד */
-  width: 100%;
+  max-width: 1440px;
   margin: auto;
-  padding: 40px 20px; /* קצת ריווח פנימי */
-  box-sizing: border-box;
   direction: rtl;
 }
 
@@ -286,7 +286,7 @@ body {
 
 .footer-column {
   flex: 1 1 200px;
-  margin: 0px 0px 30px 0px;
+  margin: 30px 0px 50px 0px;
 }
 
 .footer-column h4 {
@@ -314,7 +314,6 @@ body {
 .footer-column.brand p {
   font-size: 13px;
   margin-bottom: 10px;
-  align-items: start;
 }
 
 .social-icons a {
@@ -327,3 +326,5 @@ body {
 .social-icons a:hover {
   color: #ccc;
 }
+
+/* סיום */
