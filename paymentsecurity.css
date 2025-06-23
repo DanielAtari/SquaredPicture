@@ -143,28 +143,28 @@ nav{
 }
 
 
+
 .site-footer {
   margin-top: 50px;
-  width: 100%;
+  width: 100%; /* הרקע השחור פרוש על כל הרוחב */
   background-color: #090f11;
   color: whitesmoke;
   border-top: 3px solid #ffffff;
-  padding: 0px 90px;
+  padding: 0px; /* בלי padding פנימי */
   direction: rtl;
   white-space: nowrap;
-
 }
-
-
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css');
 
 .footer-container {
   display: flex;
-  justify-content: space-between; /* קצה ימין וקצה שמאל */
+  justify-content: space-between;
   align-items: flex-start;
   flex-wrap: wrap;
-  max-width: 1440px;
+  max-width: 1140px;  /* מתואם לשאר העמוד */
+  width: 100%;
   margin: auto;
+  padding: 40px 20px; /* קצת ריווח פנימי */
+  box-sizing: border-box;
   direction: rtl;
 }
 
@@ -173,29 +173,18 @@ nav{
   gap: 100px;
 }
 
-
 .footer-column {
   flex: 1 1 200px;
-  margin: 30px 0px 50px 0px
+  margin: 0px 0px 30px 0px;
 }
 
 .footer-column h4 {
   margin-bottom: 10px;
   font-size: 14px;
-  color:whitesmoke;
+  color: whitesmoke;
 }
 
-.footer-column a {
-  color: #ffffff;
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: normal;
-  display: inline-block;
-  margin-bottom: 10px;
-  transition: color 0.3s;
-  white-space: nowrap;
-}
-
+.footer-column a,
 .footer-column p {
   color: #ffffff;
   text-decoration: none;
@@ -207,8 +196,9 @@ nav{
   white-space: nowrap;
 }
 
-.footer-column a:hover{
-  color: #ccc;}
+.footer-column a:hover {
+  color: #ccc;
+}
 
 .footer-column.brand p {
   font-size: 13px;
@@ -226,6 +216,7 @@ nav{
 .social-icons a:hover {
   color: #ccc;
 }
+
 
 .container {
   max-width: 900px;
