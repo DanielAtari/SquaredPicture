@@ -253,23 +253,18 @@ nav {
 .solid:hover {
   background-color: #0f0304;
 }
+
+
 .site-footer {
   margin-top: 50px;
-
-  width: 100vw; /* נמתח על כל רוחב המסך */
+  width: 100%; /* הרקע השחור פרוש על כל הרוחב */
   background-color: #090f11;
   color: whitesmoke;
   border-top: 3px solid #ffffff;
-  padding: 0;
+  padding: 0px; /* בלי padding פנימי */
   direction: rtl;
   white-space: nowrap;
-  position: relative;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
 }
-
 
 .footer-container {
   display: flex;
