@@ -1,3 +1,4 @@
+/* --- בסיס --- */
 * {
   box-sizing: border-box;
 }
@@ -282,6 +283,8 @@ nav {
 .footer-column {
   flex: 1 1 200px;
   margin: 30px 0px 50px 0px;
+  min-width: 120px;
+  text-align: center;
 }
 
 .footer-column h4 {
@@ -299,7 +302,7 @@ nav {
   display: inline-block;
   margin-bottom: 10px;
   transition: color 0.3s;
-  white-space: nowrap;
+  white-space: normal;
 }
 
 .footer-column a:hover {
@@ -322,7 +325,7 @@ nav {
   color: #ccc;
 }
 
-/* רספונסיביות תוך שמירה על מבנה */
+/* --- רספונסיביות --- */
 @media (max-width: 768px) {
   body {
     margin-top: 20px;
@@ -353,7 +356,12 @@ nav {
   }
 
   .image-box {
-    max-width: 50%;
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .text-box {
+    width: 100%;
   }
 
   .text-box h2 {
@@ -383,37 +391,31 @@ nav {
   }
 
   .footer-container {
-    padding: 0;
-    flex-wrap: wrap;
-    gap: 20px;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 30px;
   }
 
   .footer-columns-left {
-    gap: 40px;
+    flex-direction: row;
     flex-wrap: wrap;
+    justify-content: center;
+    gap: 40px;
   }
 
   .footer-column {
+    width: 100%;
     min-width: 130px;
   }
 }
 
 @media (max-width: 480px) {
-
   .container {
     flex-direction: column;
     align-items: center;
     text-align: center;
     padding: 20px;
-  }
-
-  .image-box {
-    max-width: 100%;
-    margin-bottom: 20px;
-  }
-
-  .text-box {
-    width: 100%;
   }
 
   .Hbutton {
@@ -440,28 +442,4 @@ nav {
   .footer-column {
     width: 100%;
   }
-}
-
-.footer-container {
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 30px;
-}
-
-.footer-columns-left {
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 40px;
-}
-
-.footer-column {
-  min-width: 120px;
-  text-align: center;
-}
-
-.footer-column a,
-.footer-column p {
-  white-space: normal;
 }
