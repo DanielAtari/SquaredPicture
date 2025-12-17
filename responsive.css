@@ -485,42 +485,110 @@ img {
     padding: 12px 25px;
   }
 
-  /* Footer */
+  /* Footer - כל הסגנונות למובייל */
   .site-footer {
     margin-top: 30px;
   }
 
   .footer-container {
     flex-direction: column;
-    padding: 30px 20px;
+    padding: 20px 15px;
     text-align: center;
-  }
-
-  .footer-column.brand {
-    margin-bottom: 20px;
   }
 
   .footer-columns-left {
     flex-direction: column;
-    gap: 0; /* הסרת רווח - האקורדיון יטפל בריווח */
+    gap: 0 !important;
     width: 100%;
-  }
-
-  .footer-column {
+    padding: 0;
     margin: 0;
   }
 
+  /* Footer columns - ללא רווחים */
+  .footer-column {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Footer headers - קומפקטי */
   .footer-column h4 {
-    margin-bottom: 0; /* הסרת margin כשסגור */
+    margin: 0 !important;
+    padding: 8px 15px !important;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+  }
+
+  /* Plus icon for accordion */
+  .footer-column h4::after {
+    content: '+';
+    font-size: 16px;
+    font-weight: normal;
+  }
+
+  .footer-column.active h4::after {
+    content: '−';
+  }
+
+  /* Footer links - hidden by default */
+  .footer-column .footer-links {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    padding: 0 15px;
+    margin: 0;
+  }
+
+  .footer-column.active .footer-links {
+    max-height: 200px;
+    padding: 5px 15px 10px 15px;
+  }
+
+  .footer-column .footer-links a {
+    display: block;
+    padding: 6px 0;
+    margin: 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 13px;
+  }
+
+  .footer-column .footer-links a:last-child {
+    border-bottom: none;
+  }
+
+  /* Brand column - always visible, no accordion */
+  .footer-column.brand {
+    margin-bottom: 10px !important;
+    padding-bottom: 10px !important;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .footer-column.brand h4 {
+    cursor: default;
+    border-bottom: none;
+    padding: 0 15px 5px 15px !important;
+  }
+
+  .footer-column.brand h4::after {
+    content: none !important;
+  }
+
+  .footer-column.brand p {
+    padding: 0 15px;
+    margin: 0 0 10px 0;
+    font-size: 12px;
   }
 
   .social-icons {
-    margin-top: 15px;
+    margin-top: 10px;
   }
 
   .social-icons a {
-    margin: 0 10px;
-    font-size: 22px;
+    margin: 0 8px;
+    font-size: 20px;
   }
 }
 
@@ -593,70 +661,7 @@ img {
   }
 }
 
-/* ===========================================
-   FOOTER ACCORDION (Mobile Only)
-   =========================================== */
-
-@media screen and (max-width: 768px) {
-  
-  .footer-column h4 {
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 0; /* padding מצומצם */
-    margin: 0;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-  }
-
-  .footer-column h4::after {
-    content: '+';
-    font-size: 18px;
-    font-weight: normal;
-    transition: transform 0.3s ease;
-  }
-
-  .footer-column.active h4::after {
-    content: '−';
-  }
-
-  .footer-column .footer-links {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease, padding 0.3s ease;
-    padding: 0; /* ללא padding כשסגור */
-  }
-
-  .footer-column.active .footer-links {
-    max-height: 200px;
-    padding: 8px 0; /* padding רק כשפתוח */
-  }
-
-  .footer-column .footer-links a {
-    display: block;
-    padding: 8px 0; /* padding מצומצם */
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-  }
-
-  .footer-column .footer-links a:last-child {
-    border-bottom: none;
-  }
-
-  /* Brand column - always open, no accordion */
-  .footer-column.brand h4 {
-    cursor: default;
-    border-bottom: none;
-  }
-
-  .footer-column.brand h4::after {
-    content: none;
-  }
-
-  .footer-column.brand p,
-  .footer-column.brand .social-icons {
-    display: block;
-  }
-}
+/* Footer Accordion styles are now consolidated in the MOBILE STYLES section above */
 
 /* ===========================================
    PRINT STYLES
