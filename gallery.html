@@ -2,15 +2,22 @@
 <html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=1140">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title> גלריה</title>
   <link rel="stylesheet" href="gallery.css" />
+  <link rel="stylesheet" href="responsive.css" />
   <link href="https://fonts.googleapis.com/css2?family=Alef&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
   <div class="Hero">
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="nav-overlay" onclick="toggleMenu()"></div>
     <nav>
       <a href="about.html" class="button">עלינו</a>
       <a href="gallery.html" class="button">גלריה</a>
@@ -28,6 +35,7 @@
 </div>
   </div>
 
+<main id="page-content">
   <div class="Content">
     <div class="gallery-wrapper">
       <h1>גלריית תמונות</h1>
@@ -48,11 +56,8 @@
 
       </div>
     </div>
-  
-    
-
   </div>
-  
+</main>
 
 <footer class="site-footer">
   <div class="footer-container">
@@ -72,23 +77,30 @@
     <!-- 2. עמודות שמאל – כולן עטופות יחד -->
     <div class="footer-columns-left">
       <div class="footer-column">
-        <h4>מידע משפטי</h4>
-        <a href="privacy.html">מדיניות פרטיות</a><br>
-        <a href="terms.html">תנאי שימוש</a> <br>
-        <a href="paymentsecurity.html">אבטחת תשלום</a>  <br> 
-         </div>
-      <div class="footer-column">
-        <h4>דפים שימושיים</h4>
-        <a href="order.html">הזמנת מגנטים</a><br>
-        <a href="gallery.html">גלריה</a> <br>
-        <a href="about.html">עלינו </a> <br> 
-              </div>
-      <div class="footer-column">
-        <h4>צור קשר</h4>
-        <a href="mailto:roeyatari@gmail.com">roeyatari@gmail.com</a><br>
-        <a href="https://wa.me/972507339541">050-7339541</a><br>
-
+        <h4 onclick="toggleFooterAccordion(this)">מידע משפטי</h4>
+        <div class="footer-links">
+          <a href="privacy.html">מדיניות פרטיות</a>
+          <a href="terms.html">תנאי שימוש</a>
+          <a href="paymentsecurity.html">אבטחת תשלום</a>
+        </div>
       </div>
+      <div class="footer-column">
+        <h4 onclick="toggleFooterAccordion(this)">דפים שימושיים</h4>
+        <div class="footer-links">
+          <a href="order.html">הזמנת מגנטים</a>
+          <a href="gallery.html">גלריה</a>
+          <a href="about.html">עלינו</a>
+        </div>
+      </div>
+      <div class="footer-column">
+        <h4 onclick="toggleFooterAccordion(this)">צור קשר</h4>
+        <div class="footer-links">
+          <a href="mailto:roeyatari@gmail.com">roeyatari@gmail.com</a>
+          <a href="https://wa.me/972507339541">050-7339541</a>
+        </div>
+      </div>
+    </div>
+  </div>
 </footer>
 
 <div id="popup" class="popup">
@@ -99,5 +111,19 @@
 </div>
 
   <script src="gallery.js"></script>
+<script>
+function toggleMenu() {
+  document.querySelector('.hamburger').classList.toggle('active');
+  document.querySelector('nav').classList.toggle('active');
+  document.querySelector('.nav-overlay').classList.toggle('active');
+}
+
+function toggleFooterAccordion(element) {
+  if (window.innerWidth <= 768) {
+    element.parentElement.classList.toggle('active');
+  }
+}
+</script>
+<script src="router.js"></script>
 </body>
 </html>

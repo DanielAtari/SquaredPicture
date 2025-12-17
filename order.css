@@ -135,14 +135,43 @@ body {
   flex-direction: column;
   text-align: center;
   background-color: #F7F7F7;
-  line-height: 0px;
+  line-height: 1.4;
 }
 
 .Content h4 {
   font-style: italic;
-  line-height: 0px;
+  line-height: 1.5;
+  white-space: normal;
+  word-wrap: break-word;
 }
 
+/* כפתור העלאה מרובה */
+.multi-upload-btn {
+  background: linear-gradient(135deg, #2f090d, #4a1117);
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 10px;
+  font-family: 'Alef', sans-serif;
+  font-size: 15px;
+  cursor: pointer;
+  margin: 20px auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 10px rgba(47, 9, 13, 0.3);
+}
+
+.multi-upload-btn:hover {
+  background: linear-gradient(135deg, #4a1117, #2f090d);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(47, 9, 13, 0.4);
+}
+
+.multi-upload-btn i {
+  font-size: 18px;
+}
 
 .container{
   width: 60%;
@@ -180,6 +209,32 @@ body {
   position: absolute;
   top: 0;
   left: 0;
+  transition: filter 0.3s ease;
+}
+
+/* אפקט עריכה בהעברת עכבר על תמונה */
+.upload-box:hover img {
+  filter: brightness(0.8);
+}
+
+.upload-box::after {
+  content: '✏️ ערוך';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255,255,255,0.9);
+  padding: 8px 15px;
+  border-radius: 8px;
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.upload-box:has(img):hover::after {
+  opacity: 1;
 }
 
 

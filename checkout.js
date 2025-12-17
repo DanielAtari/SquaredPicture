@@ -19,9 +19,9 @@ async function uploadToCloudinary(base64) {
 }
 
 // 📨 שליחת פרטי הזמנה במייל
-// 📨 שליחת פרטי הזמנה במייל
 async function prepareOrder() {
   document.body.style.cursor = "wait";
+  document.getElementById("loader").style.display = "block";
 
   try {
     const fullName = document.getElementById("full-name")?.value.trim() || "";
@@ -75,32 +75,35 @@ async function prepareOrder() {
     return false;
   } finally {
     document.body.style.cursor = "default";
+    document.getElementById("loader").style.display = "none";
   }
 }
 
+/*
+  ============================================================================
+  💳 שירות סליקה - הוראות להוספת שירות תשלום בעתיד
+  ============================================================================
+  
+  1. בחר שירות סליקה (PayPlus, Tranzila, CardCom, iCount, Green Invoice וכו')
+  
+  2. הוסף את הסקריפט של השירות ב-checkout.html (ראה הערה שם)
+  
+  3. הוסף כאן קוד לאתחול השירות, לדוגמה:
+  
+     // אתחול שירות תשלום
+     const paymentService = new PaymentProvider({
+       merchantId: "YOUR_MERCHANT_ID",
+       apiKey: "YOUR_API_KEY"
+     });
+  
+  4. עדכן את הפונקציה handlePaymentClick למטה כך שתפתח את טופס התשלום
+  
+  5. הוסף callback לאחר תשלום מוצלח שיפנה ל-thankyou.html
+  
+  ============================================================================
+*/
 
-// 🔘 טעינת כפתור פייפאל מראש
-if (typeof paypal !== 'undefined') {
-  paypal.Buttons({
-    createOrder: function (data, actions) {
-      const orderPrice = sessionStorage.getItem("order_price") || '129.00';
-      return actions.order.create({
-        purchase_units: [{
-          amount: {
-            value: orderPrice.toString()
-          }
-        }]
-      });
-    },
-    onApprove: function (data, actions) {
-      return actions.order.capture().then(function (details) {
-        window.location.href = "thankyou.html";
-      });
-    }
-  }).render('#paypal-button-container');
-}
-
-// ▶️ לחיצה על "המשך לתשלום"
+// ▶️ לחיצה על "שלח הזמנה"
 const continueBtn = document.getElementById("continue-button");
 if (continueBtn) {
   continueBtn.addEventListener("click", async function () {
@@ -120,10 +123,31 @@ if (continueBtn) {
       return;
     }
 
+    // השבת כפתור בזמן עיבוד
+    this.disabled = true;
+    this.textContent = "שולח...";
+
     const isReady = await prepareOrder();
+    
     if (isReady) {
-      document.getElementById("paypal-wrapper").style.display = "block";
-      this.style.display = "none";
+      /*
+        💳 כאן תוכל להוסיף קריאה לשירות סליקה:
+        
+        // דוגמה:
+        // paymentService.openPaymentForm({
+        //   amount: 129,
+        //   currency: "ILS",
+        //   onSuccess: () => window.location.href = "thankyou.html",
+        //   onError: (err) => alert("שגיאה בתשלום: " + err.message)
+        // });
+        
+        כרגע - מעבר ישיר לדף תודה (ללא סליקה):
+      */
+      window.location.href = "thankyou.html";
+    } else {
+      // אפשר שוב ללחוץ אם נכשל
+      this.disabled = false;
+      this.textContent = "שלח הזמנה";
     }
   });
 }

@@ -1,0 +1,685 @@
+/* ===========================================
+   RESPONSIVE CSS - תמונה בריבוע
+   =========================================== */
+
+/* CSS Variables for breakpoints reference:
+   Mobile: < 768px
+   Tablet: 768px - 1024px  
+   Desktop: > 1024px
+*/
+
+/* ===========================================
+   BASE RESPONSIVE FIXES
+   =========================================== */
+
+body {
+  width: 100%;
+  max-width: 1140px;
+  padding: 0 15px;
+  box-sizing: border-box;
+}
+
+/* Full-width Footer */
+.site-footer {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Footer Links - Base Styles */
+.footer-links {
+  display: block;
+}
+
+.footer-links a {
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* ===========================================
+   HAMBURGER MENU
+   =========================================== */
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  padding: 10px;
+  z-index: 1001;
+}
+
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background-color: #fff;
+  margin: 3px 0;
+  transition: all 0.3s ease;
+  border-radius: 2px;
+}
+
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -6px);
+}
+
+/* ===========================================
+   TABLET STYLES (768px - 1024px)
+   =========================================== */
+
+@media screen and (max-width: 1024px) {
+  
+  body {
+    max-width: 100%;
+  }
+
+  /* Hero Section */
+  .Hero {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    min-height: 450px;
+    padding: 25px 30px;
+    margin-top: 20px;
+    border-radius: 0;
+  }
+
+  .HeroTitle {
+    padding-top: 20px;
+    padding-right: 10px;
+  }
+
+  .home-link {
+    font-size: 32px;
+  }
+
+  .SubTitle {
+    font-size: 14px;
+    letter-spacing: 2px;
+    line-height: 1.8;
+  }
+
+  /* Navigation */
+  nav {
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .button {
+    margin-right: 15px;
+    padding: 8px 15px;
+    font-size: 15px;
+  }
+
+  #order {
+    margin-right: 15px;
+    padding: 8px 15px;
+    font-size: 15px;
+  }
+
+  /* Content Sections */
+  .Content {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    padding: 25px 20px;
+    margin-top: 30px;
+  }
+
+  .Pictures {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 15px 10px;
+    max-width: 100%;
+  }
+
+  .Pictures img {
+    max-width: 260px;
+  }
+
+  /* Container */
+  .container {
+    width: 100%;
+    max-width: 100%;
+    padding: 40px 30px;
+    margin-top: 30px;
+    flex-direction: column;
+    gap: 30px;
+    max-height: none;
+  }
+
+  .text-box {
+    width: 100%;
+  }
+
+  .text-box h2 {
+    font-size: 32px;
+  }
+
+  .image-box {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .image-box img {
+    max-height: 400px;
+    width: 100%;
+  }
+
+  .Hbutton {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* Order Page Grid */
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  /* Gallery Grid */
+  .gallery-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+  }
+
+  /* Checkout */
+  .checkout-wrapper {
+    width: 95%;
+    padding: 30px 25px;
+  }
+
+  /* Footer */
+  .footer-container {
+    padding: 30px 20px;
+    flex-wrap: wrap;
+    gap: 30px;
+  }
+
+  .footer-columns-left {
+    gap: 50px;
+    flex-wrap: wrap;
+  }
+}
+
+/* ===========================================
+   MOBILE STYLES (< 768px)
+   =========================================== */
+
+@media screen and (max-width: 768px) {
+  
+  /* Show Hamburger */
+  .hamburger {
+    display: flex;
+    position: absolute;
+    top: 25px;
+    left: 25px;
+  }
+
+  /* Hero Section */
+  .Hero {
+    min-height: 400px;
+    padding: 20px 15px;
+    margin-top: 10px;
+    position: relative;
+  }
+
+  .HeroTitle {
+    padding-top: 60px;
+    padding-right: 5px;
+    text-align: center;
+  }
+
+  .home-link {
+    font-size: 26px;
+    letter-spacing: 1px;
+  }
+
+  .SubTitle {
+    font-size: 13px;
+    letter-spacing: 1px;
+    line-height: 1.7;
+  }
+
+  /* Navigation - Mobile Menu */
+  nav {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 70%;
+    max-width: 280px;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.95);
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 80px;
+    transition: right 0.3s ease;
+    z-index: 1000;
+  }
+
+  nav.active {
+    right: 0;
+  }
+
+  .button {
+    margin: 0;
+    padding: 15px 25px;
+    font-size: 16px;
+    width: 100%;
+    justify-content: flex-start;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  #order {
+    margin: 0;
+    padding: 15px 25px;
+    font-size: 16px;
+    width: 100%;
+    justify-content: flex-start;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    border-radius: 0;
+    text-align: right;
+  }
+
+  /* Overlay */
+  .nav-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 999;
+  }
+
+  .nav-overlay.active {
+    display: block;
+  }
+
+  /* Content Sections */
+  .Content {
+    padding: 20px 15px;
+    margin-top: 20px;
+  }
+
+  .Content h2 {
+    font-size: 20px;
+  }
+
+  .Pictures {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  .Pictures > div {
+    width: 100%;
+  }
+
+  .Pictures img {
+    max-width: 280px;
+    aspect-ratio: 1 / 1;
+  }
+
+  /* Container */
+  .container {
+    padding: 30px 15px;
+    margin-top: 20px;
+  }
+
+  .text-box h2 {
+    font-size: 26px;
+    margin-bottom: 25px;
+  }
+
+  .text-box h3 {
+    font-size: 18px;
+  }
+
+  .text-box h4 {
+    font-size: 14px;
+    margin-bottom: 25px;
+  }
+
+  .image-box img {
+    max-height: 300px;
+  }
+
+  .Hbutton {
+    margin-top: 30px;
+    gap: 10px;
+  }
+
+  .outline, .solid {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+
+  /* Order Page Grid - 2 columns on mobile */
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .upload-box {
+    font-size: 30px;
+    border-radius: 15px;
+  }
+
+  .preview-button, #confirm-btn {
+    padding: 12px 25px;
+    font-size: 15px;
+  }
+
+  /* Gallery Grid - 2 columns */
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .gallery-wrapper h1 {
+    font-size: 24px;
+  }
+
+  /* Confirm Page */
+  .wrapper {
+    padding: 20px 15px;
+  }
+
+  .wrapper h1 {
+    font-size: 24px;
+  }
+
+  .wrapper .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .back-btn, .pay-btn {
+    width: 100%;
+  }
+
+  /* Checkout */
+  .checkout-wrapper {
+    width: 100%;
+    padding: 20px 15px;
+    margin: 20px auto;
+  }
+
+  .checkout-wrapper h1 {
+    font-size: 24px;
+  }
+
+  .form-section {
+    padding: 15px;
+  }
+
+  .form-section input,
+  .form-section textarea {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+
+  .payment-box {
+    padding: 20px 15px;
+  }
+
+  .payment-box h2 {
+    font-size: 18px;
+  }
+
+  /* Contact Page */
+  .contact-info {
+    margin-top: 30px;
+  }
+
+  #contact-form input,
+  #contact-form textarea {
+    font-size: 16px;
+  }
+
+  /* Policy Pages */
+  .policy {
+    padding: 20px 15px;
+  }
+
+  .policy h1 {
+    font-size: 24px;
+  }
+
+  .policy h2 {
+    font-size: 18px;
+  }
+
+  /* About Page */
+  .text-box p {
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  /* Thank You Page */
+  .Content h1 {
+    font-size: 28px;
+  }
+
+  #thanksbtn {
+    padding: 12px 25px;
+  }
+
+  /* Footer */
+  .site-footer {
+    margin-top: 30px;
+  }
+
+  .footer-container {
+    flex-direction: column;
+    padding: 30px 20px;
+    text-align: center;
+  }
+
+  .footer-column.brand {
+    margin-bottom: 20px;
+  }
+
+  .footer-columns-left {
+    flex-direction: column;
+    gap: 0; /* הסרת רווח - האקורדיון יטפל בריווח */
+    width: 100%;
+  }
+
+  .footer-column {
+    margin: 0;
+  }
+
+  .footer-column h4 {
+    margin-bottom: 0; /* הסרת margin כשסגור */
+  }
+
+  .social-icons {
+    margin-top: 15px;
+  }
+
+  .social-icons a {
+    margin: 0 10px;
+    font-size: 22px;
+  }
+}
+
+/* ===========================================
+   SMALL MOBILE (< 480px)
+   =========================================== */
+
+@media screen and (max-width: 480px) {
+  
+  .Hero {
+    min-height: 350px;
+  }
+
+  .home-link {
+    font-size: 22px;
+  }
+
+  .SubTitle {
+    font-size: 12px;
+  }
+
+  /* Order Grid - still 2 columns but smaller */
+  .grid {
+    gap: 8px;
+  }
+
+  .upload-box {
+    font-size: 24px;
+    border-radius: 12px;
+  }
+
+  /* Gallery - 2 columns */
+  .gallery-grid {
+    gap: 8px;
+  }
+
+  .text-box h2 {
+    font-size: 22px;
+  }
+
+  .footer-columns-left {
+    gap: 0; /* ללא רווח - האקורדיון שולט */
+  }
+}
+
+/* ===========================================
+   POPUP/MODAL RESPONSIVE
+   =========================================== */
+
+@media screen and (max-width: 768px) {
+  
+  .popup-inner {
+    width: 95%;
+    max-width: none;
+    padding: 15px;
+  }
+
+  .popup-content {
+    max-height: 70vh;
+  }
+
+  #cropper-modal > div {
+    width: 95%;
+    max-width: none;
+    padding: 15px;
+  }
+
+  #cropper-image {
+    max-height: 50vh;
+  }
+}
+
+/* ===========================================
+   FOOTER ACCORDION (Mobile Only)
+   =========================================== */
+
+@media screen and (max-width: 768px) {
+  
+  .footer-column h4 {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0; /* padding מצומצם */
+    margin: 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .footer-column h4::after {
+    content: '+';
+    font-size: 18px;
+    font-weight: normal;
+    transition: transform 0.3s ease;
+  }
+
+  .footer-column.active h4::after {
+    content: '−';
+  }
+
+  .footer-column .footer-links {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    padding: 0; /* ללא padding כשסגור */
+  }
+
+  .footer-column.active .footer-links {
+    max-height: 200px;
+    padding: 8px 0; /* padding רק כשפתוח */
+  }
+
+  .footer-column .footer-links a {
+    display: block;
+    padding: 8px 0; /* padding מצומצם */
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .footer-column .footer-links a:last-child {
+    border-bottom: none;
+  }
+
+  /* Brand column - always open, no accordion */
+  .footer-column.brand h4 {
+    cursor: default;
+    border-bottom: none;
+  }
+
+  .footer-column.brand h4::after {
+    content: none;
+  }
+
+  .footer-column.brand p,
+  .footer-column.brand .social-icons {
+    display: block;
+  }
+}
+
+/* ===========================================
+   PRINT STYLES
+   =========================================== */
+
+@media print {
+  .hamburger,
+  nav,
+  .site-footer,
+  .preview-button,
+  #confirm-btn,
+  .Hbutton {
+    display: none !important;
+  }
+
+  body {
+    width: 100%;
+    max-width: none;
+  }
+
+  .Hero {
+    background: none;
+    color: black;
+  }
+}
+

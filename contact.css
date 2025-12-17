@@ -197,12 +197,12 @@ body {
   flex-direction: column;
   text-align: center;
   background-color: #F7F7F7;
-  line-height: 0px;
+  line-height: 1.4;
 }
 
 .Content h4 {
   font-style: italic;
-  line-height: 0px;
+  line-height: 1.4;
 }
 
 
@@ -257,6 +257,15 @@ body {
   margin-bottom: 10px;
   transition: color 0.3s;
   white-space: nowrap;
+}
+
+.footer-links {
+  display: block;
+}
+
+.footer-links a {
+  display: block;
+  margin-bottom: 8px;
 }
 
 .footer-column a:hover {

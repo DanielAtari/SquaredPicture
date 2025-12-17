@@ -2,12 +2,27 @@
 <html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>לתשלום</title>
   <link rel="stylesheet" href="checkout.css">
+  <link rel="stylesheet" href="responsive.css">
   <link href="https://fonts.googleapis.com/css2?family=Alef&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  <script src="https://www.paypal.com/sdk/js?client-id=AS47c4jmTzKod0P76_hQUuPW5oFXsO7OoeceytFqu9MMxhs0rKAJl4HmXyZNt1WIopZvJH_0l1t-ixuQ&currency=ILS"></script>
+  
+  <!-- 
+    💳 שירות סליקה - כאן תוכל להוסיף בעתיד שירות תשלום:
+    
+    אפשרויות מומלצות לישראל:
+    - PayPlus: https://www.payplus.co.il/
+    - Tranzila: https://www.tranzila.com/
+    - CardCom: https://www.cardcom.solutions/
+    - iCount: https://www.icount.co.il/
+    - Green Invoice: https://www.greeninvoice.co.il/
+    
+    דוגמה להוספת סקריפט:
+    <script src="https://payments.provider.com/sdk.js"></script>
+  -->
 
   <script src="checkout.js" defer></script>
   </head>
@@ -15,6 +30,12 @@
 <body>
 
   <div class="Hero">
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="nav-overlay" onclick="toggleMenu()"></div>
     <nav>
       <a href="about.html" class="button">עלינו</a>
       <a href="gallery.html" class="button">גלריה</a>
@@ -31,6 +52,7 @@
     </div>
   </div>
 
+<main id="page-content">
   <div class="checkout-wrapper">
     <h1>סיום ההזמנה</h1>
     <p class="summary">ההזמנה שלך כוללת 9 תמונות מודפסות באיכות גבוהה כמגנטים<br> בגודל 6.5/6.5 ס״מ</p>
@@ -65,15 +87,18 @@
         אני מאשר שקראתי את <a href="terms.html" target="_blank">תנאי השימוש</a>
       </label>
 
-      <button id="continue-button">המשך לתשלום</button>
-      <div id="paypal-wrapper" style="display: none;">
-        <div id="paypal-button-container"></div>
-      </div>
+      <button id="continue-button">שלח הזמנה</button>
+      
+      <!-- 
+        💳 כאן תוכל להוסיף בעתיד כפתור/טופס תשלום:
+        <div id="payment-button-container"></div>
+      -->
       
       <div id="loader" class="loader">🚚 שולח את ההזמנה...</div>
 
     </div>
   </div>
+</main>
 
   <footer class="site-footer">
     <div class="footer-container">
@@ -81,32 +106,52 @@
         <h4>תמונה בריבוע</h4>
         <p>הבית למגנטים בעיצוב אישי.<br>מהנייד – למקרר. בלי מאמץ.</p>
         <div class="social-icons">
-          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/picture_squared2/"><i class="fab fa-facebook-f"></i></a>
           <a href="https://wa.me/972507339541" target="_blank"><i class="fab fa-whatsapp"></i></a>
           <a href="https://www.instagram.com/picture_squared2/"><i class="fab fa-instagram"></i></a>
         </div>
       </div>
       <div class="footer-columns-left">
         <div class="footer-column">
-          <h4>מידע משפטי</h4>
-          <a href="privacy.html">מדיניות פרטיות</a><br>
-          <a href="terms.html">תנאי שימוש</a><br>
-          <a href="paymentsecurity.html">אבטחת תשלום</a>
+          <h4 onclick="toggleFooterAccordion(this)">מידע משפטי</h4>
+          <div class="footer-links">
+            <a href="privacy.html">מדיניות פרטיות</a>
+            <a href="terms.html">תנאי שימוש</a>
+            <a href="paymentsecurity.html">אבטחת תשלום</a>
+          </div>
         </div>
         <div class="footer-column">
-          <h4>דפים שימושיים</h4>
-          <a href="order.html">הזמנת מגנטים</a><br>
-          <a href="gallery.html">גלריה</a><br>
-          <a href="about.html">עלינו</a>
+          <h4 onclick="toggleFooterAccordion(this)">דפים שימושיים</h4>
+          <div class="footer-links">
+            <a href="order.html">הזמנת מגנטים</a>
+            <a href="gallery.html">גלריה</a>
+            <a href="about.html">עלינו</a>
+          </div>
         </div>
         <div class="footer-column">
-          <h4>צור קשר</h4>
-          <a href="mailto:roeyatari@gmail.com">roeyatari@gmail.com</a><br>
-          <a href="https://wa.me/972507339541">050-7339541</a>
+          <h4 onclick="toggleFooterAccordion(this)">צור קשר</h4>
+          <div class="footer-links">
+            <a href="mailto:roeyatari@gmail.com">roeyatari@gmail.com</a>
+            <a href="https://wa.me/972507339541">050-7339541</a>
+          </div>
         </div>
       </div>
     </div>
   </footer>
 
+<script>
+function toggleMenu() {
+  document.querySelector('.hamburger').classList.toggle('active');
+  document.querySelector('nav').classList.toggle('active');
+  document.querySelector('.nav-overlay').classList.toggle('active');
+}
+
+function toggleFooterAccordion(element) {
+  if (window.innerWidth <= 768) {
+    element.parentElement.classList.toggle('active');
+  }
+}
+</script>
+<script src="router.js"></script>
 </body>
 </html>

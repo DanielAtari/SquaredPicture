@@ -134,12 +134,12 @@ nav{
   flex-direction: column;
   text-align: center;
   background-color: #F7F7F7;
-  line-height: 0px;
+  line-height: 1.4;
 }
 
 .Content h4 {
   font-style: italic;
-  line-height: 0px;
+  line-height: 1.4;
 }
 
 
