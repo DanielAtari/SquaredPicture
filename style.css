@@ -107,6 +107,12 @@ nav {
   color: rgb(255, 255, 255);
   letter-spacing: 2px;
   text-shadow: 0.5px 0.5px 0px #330A0E;
+  /* Inline highlight */
+  background: rgba(0, 0, 0, 0.22);
+  padding: 4px 10px;
+  border-radius: 4px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
 }
 
 .SubTitle {
@@ -116,6 +122,12 @@ nav {
   letter-spacing: 1px;
   line-height: 2;
   text-shadow: 0.5px 0.5px 2px #240105;
+  /* Inline highlight */
+  background: rgba(0, 0, 0, 0.18);
+  padding: 3px 8px;
+  border-radius: 3px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
 }
 
 .Content {

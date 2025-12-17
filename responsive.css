@@ -104,13 +104,13 @@ img {
   }
 
   .home-link {
-    font-size: 32px;
+    font-size: 40px;
   }
 
   .SubTitle {
-    font-size: 14px;
-    letter-spacing: 2px;
-    line-height: 1.8;
+    font-size: 16px;
+    letter-spacing: 1px;
+    line-height: 1.9;
   }
 
   /* Navigation */
@@ -245,14 +245,14 @@ img {
   }
 
   .home-link {
-    font-size: 26px;
+    font-size: 36px;
     letter-spacing: 1px;
   }
 
   .SubTitle {
-    font-size: 13px;
-    letter-spacing: 1px;
-    line-height: 1.7;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+    line-height: 1.8;
   }
 
   /* Navigation - Mobile Menu */
@@ -603,11 +603,11 @@ img {
   }
 
   .home-link {
-    font-size: 22px;
+    font-size: 32px;
   }
 
   .SubTitle {
-    font-size: 12px;
+    font-size: 14px;
   }
 
   /* Order Grid - still 2 columns but smaller */
