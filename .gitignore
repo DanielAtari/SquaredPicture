@@ -17,3 +17,4 @@ info/
 # Logs
 *.log
 
+node_modules
