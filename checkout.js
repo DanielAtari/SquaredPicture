@@ -4,11 +4,14 @@ const TRANZILA_CURRENCY = "1";
 const TRANZILA_TRANMODE = "A";
 const TRANZILA_LANG = "il";
 const TRANZILA_COUNTRY = "Israel";
+const TRANZILA_CRED_TYPE = "1";
+const TRANZILA_PDESC = "9 magnets";
 
 const TEST_MODE = true;
 const TEST_AMOUNT = 1;
 const ORDER_PRICE = 129;
 const IFRAME_LOAD_TIMEOUT_MS = 12000;
+const TEST_IMAGE_PLACEHOLDER_BASE = "https://via.placeholder.com/350?text=Image+";
 
 // 🔁 פונקציית העלאה ל-Cloudinary
 async function uploadToCloudinary(base64) {
@@ -131,10 +134,14 @@ function fillTranzilaForm(params) {
   setValue("tranzila-contact", params.full_name);
   setValue("tranzila-company", params.company);
   setValue("tranzila-email", params.email);
+  setValue("tranzila-phone", params.phone);
   setValue("tranzila-country", params.country);
   setValue("tranzila-address", params.address);
   setValue("tranzila-city", params.city || "");
   setValue("tranzila-zip", params.zip || "");
+  setValue("tranzila-pdesc", TRANZILA_PDESC);
+  setValue("tranzila-remarks", params.notes || "");
+  setValue("tranzila-cred-type", TRANZILA_CRED_TYPE);
   setValue("tranzila-tranmode", TRANZILA_TRANMODE);
   setValue("tranzila-lang", TRANZILA_LANG);
   setValue("tranzila-success-url", getAbsoluteUrl("thankyou.html"));
@@ -156,6 +163,12 @@ async function ensureUploadedImageUrls() {
   const existingUrls = JSON.parse(sessionStorage.getItem("uploadedImageUrls")) || [];
   if (existingUrls.length === 9) {
     return existingUrls;
+  }
+
+  if (TEST_MODE) {
+    const dummyUrls = Array.from({ length: 9 }, (_, index) => `${TEST_IMAGE_PLACEHOLDER_BASE}${index + 1}`);
+    sessionStorage.setItem("uploadedImageUrls", JSON.stringify(dummyUrls));
+    return dummyUrls;
   }
 
   const uploadedBase64s = JSON.parse(sessionStorage.getItem("uploadedImages")) || [];
