@@ -1,6 +1,9 @@
 const TRANZILA_ENDPOINT = "https://directng.tranzila.com/fxproey2909/iframenew.php";
 // Tranzila currency: usually "1" for ILS (adjust if your account differs).
 const TRANZILA_CURRENCY = "1";
+const TRANZILA_TRANMODE = "A";
+const TRANZILA_LANG = "il";
+const TRANZILA_COUNTRY = "Israel";
 
 const TEST_MODE = true;
 const TEST_AMOUNT = 1;
@@ -98,8 +101,13 @@ function validateTranzilaParams(params) {
   if (!params.price) missing.push("sum");
   if (!TRANZILA_CURRENCY) missing.push("currency");
   if (!params.full_name) missing.push("contact");
+  if (!params.company) missing.push("company");
   if (!params.email) missing.push("email");
+  if (!params.country) missing.push("country");
   if (!params.address) missing.push("address");
+  if (!params.city) missing.push("city");
+  if (!params.zip) missing.push("zip");
+  if (!TRANZILA_TRANMODE) missing.push("tranmode");
   if (!TRANZILA_ENDPOINT) missing.push("endpoint");
 
   if (missing.length > 0) {
@@ -121,10 +129,14 @@ function fillTranzilaForm(params) {
   setValue("tranzila-sum", params.price);
   setValue("tranzila-currency", TRANZILA_CURRENCY);
   setValue("tranzila-contact", params.full_name);
+  setValue("tranzila-company", params.company);
   setValue("tranzila-email", params.email);
+  setValue("tranzila-country", params.country);
   setValue("tranzila-address", params.address);
   setValue("tranzila-city", params.city || "");
   setValue("tranzila-zip", params.zip || "");
+  setValue("tranzila-tranmode", TRANZILA_TRANMODE);
+  setValue("tranzila-lang", TRANZILA_LANG);
   setValue("tranzila-success-url", getAbsoluteUrl("thankyou.html"));
   setValue("tranzila-fail-url", getAbsoluteUrl("payment-fail.html"));
 
@@ -165,6 +177,8 @@ async function prepareOrderData() {
   try {
     const fullName = document.getElementById("full-name")?.value.trim() || "";
     const address = document.getElementById("address")?.value.trim() || "";
+    const city = document.getElementById("city")?.value.trim() || "";
+    const zip = document.getElementById("zip")?.value.trim() || "";
     const phone = document.getElementById("phone")?.value.trim() || "";
     const email = document.getElementById("email")?.value.trim() || "";
     const notes = document.getElementById("notes")?.value.trim() || "";
@@ -178,9 +192,13 @@ async function prepareOrderData() {
 
     const params = {
       full_name: fullName,
+      company: fullName,
       phone: phone,
       email: email,
+      country: TRANZILA_COUNTRY,
       address: address,
+      city: city,
+      zip: zip,
       notes: notes,
       price: getChargeAmount(),
       order_time: new Date().toLocaleString(),
@@ -237,11 +255,13 @@ if (continueBtn) {
   continueBtn.addEventListener("click", async function () {
     const fullName = document.getElementById("full-name").value.trim();
     const address = document.getElementById("address").value.trim();
+    const city = document.getElementById("city").value.trim();
+    const zip = document.getElementById("zip").value.trim();
     const phone = document.getElementById("phone").value.trim();
     const email = document.getElementById("email").value.trim();
     const checkbox = document.getElementById("terms-checkbox");
 
-    if (!fullName || !address || !phone || !email) {
+    if (!fullName || !address || !city || !zip || !phone || !email) {
       alert("אנא מלא את כל שדות החובה.");
       return;
     }

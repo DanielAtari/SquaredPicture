@@ -65,6 +65,12 @@
       <label for="address">כתובת מלאה:</label>
       <input type="text" id="address" placeholder="רחוב, מספר, עיר, מיקוד">
 
+      <label for="city">עיר:</label>
+      <input type="text" id="city" placeholder="תל אביב">
+
+      <label for="zip">מיקוד:</label>
+      <input type="text" id="zip" placeholder="123456">
+
       <label for="phone">מספר טלפון:</label>
       <input type="tel" id="phone" placeholder="050-1234567">
     </div>
@@ -103,15 +109,20 @@
           class="tranzila-iframe"
           title="תשלום מאובטח"
           loading="lazy"
+          allow="payment"
         ></iframe>
         <form id="tranzila-form" method="POST" target="tranzila-iframe">
           <input type="hidden" name="sum" id="tranzila-sum">
           <input type="hidden" name="currency" id="tranzila-currency">
           <input type="hidden" name="contact" id="tranzila-contact">
+          <input type="hidden" name="company" id="tranzila-company">
           <input type="hidden" name="email" id="tranzila-email">
+          <input type="hidden" name="country" id="tranzila-country">
           <input type="hidden" name="address" id="tranzila-address">
           <input type="hidden" name="city" id="tranzila-city">
           <input type="hidden" name="zip" id="tranzila-zip">
+          <input type="hidden" name="tranmode" id="tranzila-tranmode">
+          <input type="hidden" name="lang" id="tranzila-lang">
           <input type="hidden" name="success_url_address" id="tranzila-success-url">
           <input type="hidden" name="fail_url_address" id="tranzila-fail-url">
         </form>
