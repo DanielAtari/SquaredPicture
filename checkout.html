@@ -80,6 +80,7 @@
 
     <div class="payment-box">
       <h2>סכום לתשלום: <span class="price">₪129</span></h2>
+      <p class="test-mode-badge" id="test-mode-badge" hidden>מצב בדיקה פעיל</p>
 
       <label class="checkbox-container">
         <input type="checkbox" id="terms-checkbox">
@@ -89,12 +90,34 @@
 
       <button id="continue-button">שלח הזמנה</button>
       
-      <!-- 
-        💳 כאן תוכל להוסיף בעתיד כפתור/טופס תשלום:
-        <div id="payment-button-container"></div>
-      -->
+      <div id="payment-section" class="payment-iframe-section" aria-live="polite">
+        <div class="payment-summary">
+          <p>מספר הזמנה: <span id="order-id-display">—</span></p>
+          <p>סכום לתשלום: <span id="payment-amount-display">₪129</span></p>
+        </div>
+        <p class="payment-note" id="payment-status">חלון התשלום ייטען כאן. אם הוא לא מוצג, ניתן לרענן את הדף.</p>
+        <p class="payment-error" id="payment-error" role="alert" hidden></p>
+        <iframe
+          id="tranzila-iframe"
+          name="tranzila-iframe"
+          class="tranzila-iframe"
+          title="תשלום מאובטח"
+          loading="lazy"
+        ></iframe>
+        <form id="tranzila-form" method="POST" target="tranzila-iframe">
+          <input type="hidden" name="sum" id="tranzila-sum">
+          <input type="hidden" name="currency" id="tranzila-currency">
+          <input type="hidden" name="contact" id="tranzila-contact">
+          <input type="hidden" name="email" id="tranzila-email">
+          <input type="hidden" name="address" id="tranzila-address">
+          <input type="hidden" name="city" id="tranzila-city">
+          <input type="hidden" name="zip" id="tranzila-zip">
+          <input type="hidden" name="success_url_address" id="tranzila-success-url">
+          <input type="hidden" name="fail_url_address" id="tranzila-fail-url">
+        </form>
+      </div>
       
-      <div id="loader" class="loader">🚚 שולח את ההזמנה...</div>
+      <div id="loader" class="loader">⏳ מכין את התשלום...</div>
 
     </div>
   </div>

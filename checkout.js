@@ -1,7 +1,11 @@
-// 🟢 אתחול EmailJS
-emailjs.init({
-  publicKey: "ZlMWywxR4b4mdTC4K"
-});
+const TRANZILA_ENDPOINT = "https://directng.tranzila.com/fxproey2909/iframenew.php";
+// Tranzila currency: usually "1" for ILS (adjust if your account differs).
+const TRANZILA_CURRENCY = "1";
+
+const TEST_MODE = true;
+const TEST_AMOUNT = 1;
+const ORDER_PRICE = 129;
+const IFRAME_LOAD_TIMEOUT_MS = 12000;
 
 // 🔁 פונקציית העלאה ל-Cloudinary
 async function uploadToCloudinary(base64) {
@@ -18,10 +22,145 @@ async function uploadToCloudinary(base64) {
   return data.secure_url;
 }
 
-// 📨 שליחת פרטי הזמנה במייל
-async function prepareOrder() {
-  document.body.style.cursor = "wait";
-  document.getElementById("loader").style.display = "block";
+function getAbsoluteUrl(path) {
+  return new URL(path, window.location.href).toString();
+}
+
+function showLoader(show) {
+  document.body.style.cursor = show ? "wait" : "default";
+  document.getElementById("loader").style.display = show ? "block" : "none";
+}
+
+function showPaymentStatus(message) {
+  const statusEl = document.getElementById("payment-status");
+  if (statusEl) {
+    statusEl.textContent = message;
+  }
+}
+
+function showPaymentError(message) {
+  const errorEl = document.getElementById("payment-error");
+  if (errorEl) {
+    errorEl.textContent = message;
+    errorEl.hidden = false;
+  }
+}
+
+function clearPaymentError() {
+  const errorEl = document.getElementById("payment-error");
+  if (errorEl) {
+    errorEl.textContent = "";
+    errorEl.hidden = true;
+  }
+}
+
+function showPaymentSection(orderId, amount) {
+  const section = document.getElementById("payment-section");
+  const orderIdEl = document.getElementById("order-id-display");
+  const amountEl = document.getElementById("payment-amount-display");
+
+  if (orderIdEl) {
+    orderIdEl.textContent = orderId;
+  }
+
+  if (amountEl) {
+    amountEl.textContent = `₪${amount}`;
+  }
+
+  if (section) {
+    section.classList.add("is-visible");
+    section.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
+
+function getChargeAmount() {
+  return TEST_MODE ? TEST_AMOUNT : ORDER_PRICE;
+}
+
+function updatePriceDisplay(amount) {
+  const priceEl = document.querySelector(".price");
+  const amountEl = document.getElementById("payment-amount-display");
+  if (priceEl) {
+    priceEl.textContent = `₪${amount}`;
+  }
+  if (amountEl) {
+    amountEl.textContent = `₪${amount}`;
+  }
+
+  const badge = document.getElementById("test-mode-badge");
+  if (badge) {
+    badge.hidden = !TEST_MODE;
+  }
+}
+
+function validateTranzilaParams(params) {
+  const missing = [];
+  if (!params.price) missing.push("sum");
+  if (!TRANZILA_CURRENCY) missing.push("currency");
+  if (!params.full_name) missing.push("contact");
+  if (!params.email) missing.push("email");
+  if (!params.address) missing.push("address");
+  if (!TRANZILA_ENDPOINT) missing.push("endpoint");
+
+  if (missing.length > 0) {
+    showPaymentError(`חסרים פרמטרים לתשלום: ${missing.join(", ")}`);
+    return false;
+  }
+
+  return true;
+}
+
+function fillTranzilaForm(params) {
+  const setValue = (id, value) => {
+    const input = document.getElementById(id);
+    if (input) {
+      input.value = value ?? "";
+    }
+  };
+
+  setValue("tranzila-sum", params.price);
+  setValue("tranzila-currency", TRANZILA_CURRENCY);
+  setValue("tranzila-contact", params.full_name);
+  setValue("tranzila-email", params.email);
+  setValue("tranzila-address", params.address);
+  setValue("tranzila-city", params.city || "");
+  setValue("tranzila-zip", params.zip || "");
+  setValue("tranzila-success-url", getAbsoluteUrl("thankyou.html"));
+  setValue("tranzila-fail-url", getAbsoluteUrl("payment-fail.html"));
+
+  const form = document.getElementById("tranzila-form");
+  if (form) {
+    form.action = TRANZILA_ENDPOINT;
+  }
+}
+
+function storePendingOrder(params) {
+  sessionStorage.setItem("order_price", params.price);
+  sessionStorage.setItem("last_order_id", params.order_id);
+  sessionStorage.setItem("pending_order_email", JSON.stringify(params));
+}
+
+async function ensureUploadedImageUrls() {
+  const existingUrls = JSON.parse(sessionStorage.getItem("uploadedImageUrls")) || [];
+  if (existingUrls.length === 9) {
+    return existingUrls;
+  }
+
+  const uploadedBase64s = JSON.parse(sessionStorage.getItem("uploadedImages")) || [];
+
+  if (uploadedBase64s.length !== 9) {
+    alert("נדרשות בדיוק 9 תמונות להזמנה.");
+    return null;
+  }
+
+  const uploadedUrls = await Promise.all(uploadedBase64s.map(uploadToCloudinary));
+  sessionStorage.setItem("uploadedImageUrls", JSON.stringify(uploadedUrls));
+  return uploadedUrls;
+}
+
+// 📨 הכנת פרטי הזמנה (ללא שליחת מייל עד לתשלום מוצלח)
+async function prepareOrderData() {
+  showLoader(true);
 
   try {
     const fullName = document.getElementById("full-name")?.value.trim() || "";
@@ -30,17 +169,12 @@ async function prepareOrder() {
     const email = document.getElementById("email")?.value.trim() || "";
     const notes = document.getElementById("notes")?.value.trim() || "";
 
-    const uploadedBase64s = JSON.parse(sessionStorage.getItem("uploadedImages")) || [];
-
-    if (uploadedBase64s.length !== 9) {
-      alert("נדרשות בדיוק 9 תמונות להזמנה.");
-      return false;
+    const uploadedUrls = await ensureUploadedImageUrls();
+    if (!uploadedUrls) {
+      return null;
     }
 
-    const uploadedUrls = await Promise.all(uploadedBase64s.map(uploadToCloudinary));
-
     const orderId = "ORD-" + Date.now();
-    sessionStorage.setItem("last_order_id", orderId);
 
     const params = {
       full_name: fullName,
@@ -48,7 +182,7 @@ async function prepareOrder() {
       email: email,
       address: address,
       notes: notes,
-      price: 129,
+      price: getChargeAmount(),
       order_time: new Date().toLocaleString(),
       order_id: orderId,
       image1: uploadedUrls[0],
@@ -62,20 +196,14 @@ async function prepareOrder() {
       image9: uploadedUrls[8]
     };
 
-    sessionStorage.setItem("order_price", params.price);
-
-    await emailjs.send("service_kjsnnck", "template_xtvgubk", params);
-    console.log("📬 מייל נשלח בהצלחה");
-
-    return true;
-
+    storePendingOrder(params);
+    return params;
   } catch (err) {
     alert("❌ שגיאה בהזמנה: " + err.message);
     console.error("שגיאה:", err);
-    return false;
+    return null;
   } finally {
-    document.body.style.cursor = "default";
-    document.getElementById("loader").style.display = "none";
+    showLoader(false);
   }
 }
 
@@ -125,25 +253,43 @@ if (continueBtn) {
 
     // השבת כפתור בזמן עיבוד
     this.disabled = true;
-    this.textContent = "שולח...";
+    this.textContent = "מכין תשלום...";
 
-    const isReady = await prepareOrder();
-    
-    if (isReady) {
-      /*
-        💳 כאן תוכל להוסיף קריאה לשירות סליקה:
-        
-        // דוגמה:
-        // paymentService.openPaymentForm({
-        //   amount: 129,
-        //   currency: "ILS",
-        //   onSuccess: () => window.location.href = "thankyou.html",
-        //   onError: (err) => alert("שגיאה בתשלום: " + err.message)
-        // });
-        
-        כרגע - מעבר ישיר לדף תודה (ללא סליקה):
-      */
-      window.location.href = "thankyou.html";
+    clearPaymentError();
+    showPaymentStatus("טוען סליקה…");
+    const params = await prepareOrderData();
+
+    if (params) {
+      if (!validateTranzilaParams(params)) {
+        this.disabled = false;
+        this.textContent = "שלח הזמנה";
+        return;
+      }
+
+      showPaymentSection(params.order_id, params.price);
+      fillTranzilaForm(params);
+
+      const form = document.getElementById("tranzila-form");
+      if (form) {
+        const iframe = document.getElementById("tranzila-iframe");
+        let hasLoaded = false;
+
+        if (iframe) {
+          iframe.addEventListener("load", () => {
+            hasLoaded = true;
+            showPaymentStatus("מסך תשלום נטען");
+          }, { once: true });
+        }
+
+        setTimeout(() => {
+          if (!hasLoaded) {
+            showPaymentError("ה־iframe לא נטען. בדוק שאין חסימה בדפדפן או פרמטר חסר.");
+            showPaymentStatus("טוען סליקה…");
+          }
+        }, IFRAME_LOAD_TIMEOUT_MS);
+
+        form.submit();
+      }
     } else {
       // אפשר שוב ללחוץ אם נכשל
       this.disabled = false;
@@ -151,3 +297,5 @@ if (continueBtn) {
     }
   });
 }
+
+updatePriceDisplay(getChargeAmount());

@@ -72,6 +72,56 @@ textarea {
   text-align: center;
 }
 
+.payment-iframe-section {
+  display: none;
+  margin-top: 25px;
+  text-align: center;
+}
+
+.payment-iframe-section.is-visible {
+  display: block;
+}
+
+.payment-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+  font-size: 16px;
+  color: #333;
+}
+
+.payment-note {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.payment-error {
+  margin-bottom: 15px;
+  font-size: 14px;
+  color: #b00020;
+}
+
+.test-mode-badge {
+  display: inline-block;
+  margin: 10px auto 0;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background-color: #fbe9e7;
+  color: #b00020;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.tranzila-iframe {
+  width: 100%;
+  height: 600px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #fff;
+}
+
 .price {
   color: #d12f2f;
   font-weight: bold;
