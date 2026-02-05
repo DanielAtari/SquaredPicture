@@ -72,6 +72,29 @@ textarea {
   text-align: center;
 }
 
+.payment-message {
+  display: none;
+  margin: 12px 0;
+  color: #b00020;
+  font-size: 14px;
+}
+
+.payment-message.is-visible {
+  display: block;
+}
+
+.payment-container {
+  margin-top: 16px;
+}
+
+#tranzila-iframe {
+  width: 100%;
+  min-height: 520px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
 .price {
   color: #d12f2f;
   font-weight: bold;

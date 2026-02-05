@@ -3,6 +3,180 @@ emailjs.init({
   publicKey: "ZlMWywxR4b4mdTC4K"
 });
 
+// 🚧 דגל פיתוח - שנה ל-false לפני עלייה לפרודקשן
+const DEV_MODE = false;
+
+const TRANZILA_CONFIG = {
+  currency: 1,
+  lang: "il",
+  buttonLabel: "שלם",
+  enableBit: false,
+  enableGooglePay: false
+};
+
+const paymentMessage = document.getElementById("payment-message");
+const paymentContainer = document.getElementById("payment-container");
+const tranzilaForm = document.getElementById("tranzila-form");
+
+const tranzilaInputs = {
+  sum: document.getElementById("tranzila-sum"),
+  currency: document.getElementById("tranzila-currency"),
+  successUrl: document.getElementById("tranzila-success-url"),
+  failUrl: document.getElementById("tranzila-fail-url"),
+  notifyUrl: document.getElementById("tranzila-notify-url"),
+  lang: document.getElementById("tranzila-lang"),
+  buttonLabel: document.getElementById("tranzila-button-label"),
+  thtk: document.getElementById("tranzila-thtk"),
+  dcdisable: document.getElementById("tranzila-dcdisable"),
+  u71: document.getElementById("tranzila-u71"),
+  newprocess: document.getElementById("tranzila-newprocess"),
+  newProcess: document.getElementById("tranzila-new-process"),
+  company: document.getElementById("tranzila-company"),
+  contact: document.getElementById("tranzila-contact"),
+  email: document.getElementById("tranzila-email"),
+  address: document.getElementById("tranzila-address"),
+  phone: document.getElementById("tranzila-phone"),
+  city: document.getElementById("tranzila-city"),
+  pdesc: document.getElementById("tranzila-pdesc"),
+  remarks: document.getElementById("tranzila-remarks"),
+  orderId: document.getElementById("tranzila-order-id"),
+  orderTime: document.getElementById("tranzila-order-time"),
+  price: document.getElementById("tranzila-price"),
+  image1: document.getElementById("tranzila-image1"),
+  image2: document.getElementById("tranzila-image2"),
+  image3: document.getElementById("tranzila-image3"),
+  image4: document.getElementById("tranzila-image4"),
+  image5: document.getElementById("tranzila-image5"),
+  image6: document.getElementById("tranzila-image6"),
+  image7: document.getElementById("tranzila-image7"),
+  image8: document.getElementById("tranzila-image8"),
+  image9: document.getElementById("tranzila-image9")
+};
+
+function showPaymentMessage(text) {
+  if (!paymentMessage) return;
+  paymentMessage.textContent = text;
+  paymentMessage.classList.add("is-visible");
+}
+
+function clearPaymentMessage() {
+  if (!paymentMessage) return;
+  paymentMessage.textContent = "";
+  paymentMessage.classList.remove("is-visible");
+}
+
+function getOrCreateOrderId() {
+  const existing = sessionStorage.getItem("order_id");
+  if (existing) return existing;
+  const orderId = "ORD-" + Date.now();
+  sessionStorage.setItem("order_id", orderId);
+  sessionStorage.setItem("last_order_id", orderId);
+  return orderId;
+}
+
+function buildAbsoluteUrl(path) {
+  return new URL(path, window.location.origin).toString();
+}
+
+function applyTranzilaParams(params) {
+  if (!tranzilaForm) return;
+  tranzilaForm.action = params.action;
+  tranzilaInputs.sum.value = params.sum;
+  tranzilaInputs.currency.value = params.currency;
+  tranzilaInputs.successUrl.value = params.successUrl;
+  tranzilaInputs.failUrl.value = params.failUrl;
+  tranzilaInputs.notifyUrl.value = params.notifyUrl;
+  tranzilaInputs.lang.value = params.lang;
+  tranzilaInputs.buttonLabel.value = params.buttonLabel;
+  tranzilaInputs.thtk.value = params.thtk;
+  tranzilaInputs.dcdisable.value = params.dcdisable;
+  tranzilaInputs.u71.value = "1";
+  tranzilaInputs.newprocess.value = "1";
+  tranzilaInputs.newProcess.value = "1";
+}
+
+function applyOrderParams(params) {
+  tranzilaInputs.company.value = params.company || "";
+  tranzilaInputs.contact.value = params.contact || "";
+  tranzilaInputs.email.value = params.email || "";
+  tranzilaInputs.address.value = params.address || "";
+  tranzilaInputs.phone.value = params.phone || "";
+  tranzilaInputs.city.value = params.city || "";
+  tranzilaInputs.pdesc.value = params.pdesc || "";
+  tranzilaInputs.remarks.value = params.remarks || "";
+  tranzilaInputs.orderId.value = params.orderId || "";
+  tranzilaInputs.orderTime.value = params.orderTime || "";
+  tranzilaInputs.price.value = params.price || "";
+  tranzilaInputs.image1.value = params.image1 || "";
+  tranzilaInputs.image2.value = params.image2 || "";
+  tranzilaInputs.image3.value = params.image3 || "";
+  tranzilaInputs.image4.value = params.image4 || "";
+  tranzilaInputs.image5.value = params.image5 || "";
+  tranzilaInputs.image6.value = params.image6 || "";
+  tranzilaInputs.image7.value = params.image7 || "";
+  tranzilaInputs.image8.value = params.image8 || "";
+  tranzilaInputs.image9.value = params.image9 || "";
+}
+
+async function requestHandshake(sum, orderId) {
+  const response = await fetch("/.netlify/functions/handshake", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ sum, order_id: orderId })
+  });
+
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(text || "Handshake failed");
+  }
+
+  return response.json();
+}
+
+function showFailMessageIfNeeded() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("payment") === "failed") {
+    showPaymentMessage("שגיאת תשלום. נסה שוב או השתמש באמצעי תשלום אחר.");
+  }
+}
+
+async function startPaymentFlow(sum, orderId) {
+  clearPaymentMessage();
+  if (paymentContainer) paymentContainer.hidden = true;
+
+  let handshake;
+  try {
+    handshake = await requestHandshake(sum, orderId);
+  } catch (error) {
+    showPaymentMessage("שגיאת מערכת בעת התחברות לסליקה. נסה שוב בעוד רגע.");
+    throw error;
+  }
+
+  sessionStorage.setItem("tranzila_thtk", handshake.thtk);
+
+  const successUrl = buildAbsoluteUrl("thankyou.html");
+  const failUrl = buildAbsoluteUrl("checkout.html?payment=failed");
+  const notifyUrl = buildAbsoluteUrl(".netlify/functions/notify");
+
+  applyTranzilaParams({
+    action: `https://direct.tranzila.com/${handshake.terminal_iframe || handshake.terminal}/iframenew.php`,
+    sum,
+    currency: TRANZILA_CONFIG.currency,
+    successUrl,
+    failUrl,
+    notifyUrl,
+    lang: TRANZILA_CONFIG.lang,
+    buttonLabel: TRANZILA_CONFIG.buttonLabel,
+    thtk: handshake.thtk,
+    dcdisable: orderId
+  });
+
+  if (paymentContainer) paymentContainer.hidden = false;
+  tranzilaForm.submit();
+}
+
+showFailMessageIfNeeded();
+
 // 🔁 פונקציית העלאה ל-Cloudinary
 async function uploadToCloudinary(base64) {
   const formData = new FormData();
@@ -24,6 +198,25 @@ async function prepareOrder() {
   document.getElementById("loader").style.display = "block";
 
   try {
+    if (DEV_MODE) {
+      const orderId = getOrCreateOrderId();
+      sessionStorage.setItem("order_price", 129);
+      applyOrderParams({
+        company: "תמונה בריבוע",
+        contact: "Test User",
+        email: "test@example.com",
+        address: "Test Address",
+        phone: "0501234567",
+        pdesc: "DEV order",
+        remarks: "DEV_MODE",
+        orderId,
+        orderTime: new Date().toLocaleString(),
+        price: 129,
+      });
+      console.log("🧪 DEV_MODE enabled - skipping uploads and email", { order_id: orderId });
+      return true;
+    }
+
     const fullName = document.getElementById("full-name")?.value.trim() || "";
     const address = document.getElementById("address")?.value.trim() || "";
     const phone = document.getElementById("phone")?.value.trim() || "";
@@ -39,8 +232,7 @@ async function prepareOrder() {
 
     const uploadedUrls = await Promise.all(uploadedBase64s.map(uploadToCloudinary));
 
-    const orderId = "ORD-" + Date.now();
-    sessionStorage.setItem("last_order_id", orderId);
+    const orderId = getOrCreateOrderId();
 
     const params = {
       full_name: fullName,
@@ -64,8 +256,27 @@ async function prepareOrder() {
 
     sessionStorage.setItem("order_price", params.price);
 
-    await emailjs.send("service_kjsnnck", "template_xtvgubk", params);
-    console.log("📬 מייל נשלח בהצלחה");
+    applyOrderParams({
+      company: "תמונה בריבוע",
+      contact: params.full_name,
+      email: params.email,
+      address: params.address,
+      phone: params.phone,
+      pdesc: "הזמנת מגנטים - 9 תמונות",
+      remarks: params.notes,
+      orderId: params.order_id,
+      orderTime: params.order_time,
+      price: params.price,
+      image1: params.image1,
+      image2: params.image2,
+      image3: params.image3,
+      image4: params.image4,
+      image5: params.image5,
+      image6: params.image6,
+      image7: params.image7,
+      image8: params.image8,
+      image9: params.image9,
+    });
 
     return true;
 
@@ -130,20 +341,15 @@ if (continueBtn) {
     const isReady = await prepareOrder();
     
     if (isReady) {
-      /*
-        💳 כאן תוכל להוסיף קריאה לשירות סליקה:
-        
-        // דוגמה:
-        // paymentService.openPaymentForm({
-        //   amount: 129,
-        //   currency: "ILS",
-        //   onSuccess: () => window.location.href = "thankyou.html",
-        //   onError: (err) => alert("שגיאה בתשלום: " + err.message)
-        // });
-        
-        כרגע - מעבר ישיר לדף תודה (ללא סליקה):
-      */
-      window.location.href = "thankyou.html";
+      const orderId = getOrCreateOrderId();
+      const sum = sessionStorage.getItem("order_price") || 129;
+      try {
+        await startPaymentFlow(sum, orderId);
+        this.textContent = "ממתין לתשלום...";
+      } catch (error) {
+        this.disabled = false;
+        this.textContent = "שלח הזמנה";
+      }
     } else {
       // אפשר שוב ללחוץ אם נכשל
       this.disabled = false;

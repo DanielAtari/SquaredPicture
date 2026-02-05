@@ -17,3 +17,9 @@ info/
 # Logs
 *.log
 
+# Env files
+.env
+
+
+# Local Netlify folder
+.netlify

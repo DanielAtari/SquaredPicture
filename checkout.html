@@ -89,10 +89,52 @@
 
       <button id="continue-button">שלח הזמנה</button>
       
-      <!-- 
-        💳 כאן תוכל להוסיף בעתיד כפתור/טופס תשלום:
-        <div id="payment-button-container"></div>
-      -->
+      <div id="payment-message" class="payment-message" role="alert" aria-live="polite"></div>
+
+      <div id="payment-container" class="payment-container" hidden>
+        <form id="tranzila-form" method="POST" target="tranzila-iframe" action="">
+          <input type="hidden" name="sum" id="tranzila-sum">
+          <input type="hidden" name="currency" id="tranzila-currency">
+          <input type="hidden" name="success_url_address" id="tranzila-success-url">
+          <input type="hidden" name="fail_url_address" id="tranzila-fail-url">
+          <input type="hidden" name="notify_url_address" id="tranzila-notify-url">
+          <input type="hidden" name="lang" id="tranzila-lang">
+          <input type="hidden" name="buttonLabel" id="tranzila-button-label">
+          <input type="hidden" name="thtk" id="tranzila-thtk">
+          <input type="hidden" name="DCdisable" id="tranzila-dcdisable">
+          <input type="hidden" name="u71" id="tranzila-u71">
+          <input type="hidden" name="newprocess" id="tranzila-newprocess">
+          <input type="hidden" name="new_process" id="tranzila-new-process">
+          <input type="hidden" name="company" id="tranzila-company">
+          <input type="hidden" name="contact" id="tranzila-contact">
+          <input type="hidden" name="email" id="tranzila-email">
+          <input type="hidden" name="address" id="tranzila-address">
+          <input type="hidden" name="phone" id="tranzila-phone">
+          <input type="hidden" name="city" id="tranzila-city">
+          <input type="hidden" name="pdesc" id="tranzila-pdesc">
+          <input type="hidden" name="remarks" id="tranzila-remarks">
+          <input type="hidden" name="order_id" id="tranzila-order-id">
+          <input type="hidden" name="order_time" id="tranzila-order-time">
+          <input type="hidden" name="price" id="tranzila-price">
+          <input type="hidden" name="image1" id="tranzila-image1">
+          <input type="hidden" name="image2" id="tranzila-image2">
+          <input type="hidden" name="image3" id="tranzila-image3">
+          <input type="hidden" name="image4" id="tranzila-image4">
+          <input type="hidden" name="image5" id="tranzila-image5">
+          <input type="hidden" name="image6" id="tranzila-image6">
+          <input type="hidden" name="image7" id="tranzila-image7">
+          <input type="hidden" name="image8" id="tranzila-image8">
+          <input type="hidden" name="image9" id="tranzila-image9">
+        </form>
+
+        <iframe
+          id="tranzila-iframe"
+          name="tranzila-iframe"
+          title="תשלום מאובטח"
+          allow="payment"
+          allowpaymentrequest="true"
+        ></iframe>
+      </div>
       
       <div id="loader" class="loader">🚚 שולח את ההזמנה...</div>
 
