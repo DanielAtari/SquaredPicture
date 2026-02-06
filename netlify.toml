@@ -1,17 +1,3 @@
 [build]
   command = "echo 'Static site - no build needed'"
   publish = "."
-  functions = "netlify/functions"
-
-# Route Tranzila callbacks to serverless functions
-[[redirects]]
-  from = "/tranzila/success"
-  to = "/.netlify/functions/tranzila-success"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/tranzila/fail"
-  to = "/.netlify/functions/tranzila-fail"
-  status = 200
-  force = true
