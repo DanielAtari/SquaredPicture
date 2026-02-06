@@ -1,4 +1,5 @@
-const TRANZILA_IFRAME_PROXY = "/.netlify/functions/tranzila-iframe";
+// Submit directly to Tranzila – no server proxy needed
+const TRANZILA_IFRAME_URL = "https://directng.tranzila.com/fxproey2909/iframenew.php";
 // Tranzila currency: usually "1" for ILS (adjust if your account differs).
 const TRANZILA_CURRENCY = "1";
 const TRANZILA_TRANMODE = "A";
@@ -113,7 +114,7 @@ function validateTranzilaParams(params) {
   if (!params.city) missing.push("city");
   if (!params.zip) missing.push("zip");
   if (!TRANZILA_TRANMODE) missing.push("tranmode");
-  if (!TRANZILA_IFRAME_PROXY) missing.push("endpoint");
+  if (!TRANZILA_IFRAME_URL) missing.push("endpoint");
 
   if (missing.length > 0) {
     showPaymentError(`חסרים פרמטרים לתשלום: ${missing.join(", ")}`);
@@ -147,12 +148,12 @@ function fillTranzilaForm(params) {
   setValue("tranzila-tranmode", TRANZILA_TRANMODE);
   setValue("tranzila-new-process", TRANZILA_NEW_PROCESS);
   setValue("tranzila-lang", TRANZILA_LANG);
-  setValue("tranzila-success-url", getAbsoluteUrl("tranzila/success"));
-  setValue("tranzila-fail-url", getAbsoluteUrl("tranzila/fail"));
+  setValue("tranzila-success-url", getAbsoluteUrl("thankyou.html"));
+  setValue("tranzila-fail-url", getAbsoluteUrl("payment-fail.html"));
 
   const form = document.getElementById("tranzila-form");
   if (form) {
-    form.action = TRANZILA_IFRAME_PROXY;
+    form.action = TRANZILA_IFRAME_URL;
   }
 
   const debugPayload = {
@@ -169,8 +170,8 @@ function fillTranzilaForm(params) {
     tranmode: TRANZILA_TRANMODE,
     cred_type: TRANZILA_CRED_TYPE,
     lang: TRANZILA_LANG,
-    success_url_address: getAbsoluteUrl("tranzila/success"),
-    fail_url_address: getAbsoluteUrl("tranzila/fail")
+    success_url_address: getAbsoluteUrl("thankyou.html"),
+    fail_url_address: getAbsoluteUrl("payment-fail.html")
   };
   console.log("Tranzila debug payload:", debugPayload);
 }
