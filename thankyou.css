@@ -129,9 +129,9 @@ body {
   display: flex;
   margin: auto;
   margin-top: 50px;
-  margin-bottom: 25px;
+  margin-bottom: 80px;
   width: 1140px;
-  padding: 30px 44px;
+  padding: 30px 44px 50px;
   flex-direction: column;
   text-align: center;
   background-color: #F7F7F7;
@@ -235,13 +235,12 @@ body {
   align-content: space-evenly;
   margin: auto;
   margin-top: 50px;
+  margin-bottom: 80px;
   max-width: 1140px;
-  max-height: 650px;
-  padding: 36px 44px;
+  padding: 55px 60px;
   flex-direction: row;
   text-align: center;
   gap: 55px;
-  padding: 55px 60px;
   background-color: #F7F7F7;
 }
 
@@ -266,23 +265,114 @@ align-items: flex-start;
 #thanksbtn{
   background: black;
   margin: 10px auto;
-  padding: 5px 15px;
+  padding: 10px 30px;
   align-items: center;
   font-family: Alef;
   font-size: 17px;
   line-height: 150%;
   color: #EFEFED;
-  display: flex;
+  display: inline-flex;
   border-radius: 10px;
   text-decoration: none;
-  background-color: none;
-
 }
 
 #thanksbtn:hover {
   color: white;
   text-decoration: none;
   background-color: #25070a;
+}
+
+/* Success / Fail icons */
+.success-icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: #2e7d32;
+  color: white;
+  font-size: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+
+.fail-icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: #b00020;
+  color: white;
+  font-size: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+
+/* Order details card */
+.order-details {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 20px 28px;
+  margin: 24px auto;
+  max-width: 400px;
+  text-align: right;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-label {
+  font-weight: bold;
+  color: #555;
+  font-size: 14px;
+}
+
+.detail-value {
+  color: #222;
+  font-size: 14px;
+}
+
+.next-steps {
+  color: #666;
+  font-size: 14px;
+  margin: 20px 0;
+  line-height: 1.7;
+}
+
+/* Fail page buttons */
+.fail-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.contact-link {
+  padding: 10px 30px;
+  font-family: Alef;
+  font-size: 17px;
+  line-height: 150%;
+  color: #333;
+  display: inline-flex;
+  border-radius: 10px;
+  text-decoration: none;
+  background-color: #e6e6e6;
+  align-items: center;
+}
+
+.contact-link:hover {
+  background-color: #c8c8c8;
 }
 
 

@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>התשלום לא הושלם</title>
+  <script>if (window.top !== window.self) { window.top.location.href = window.location.href; }</script>
   <link rel="stylesheet" href="thankyou.css" />
   <link rel="stylesheet" href="responsive.css" />
   <link href="https://fonts.googleapis.com/css2?family=Alef&display=swap" rel="stylesheet">
@@ -36,12 +37,53 @@
 <main id="page-content">
   <div class="container">
     <div class="Content">
+      <div class="fail-icon">&#10007;</div>
       <h1>התשלום לא הושלם</h1>
-      <p>נראה שהתשלום נכשל או בוטל. אפשר לחזור לעמוד התשלום ולנסות שוב.</p>
-      <a href="checkout.html" id="thanksbtn">חזרה לעמוד התשלום</a>
+      <p>נראה שהתשלום נכשל או בוטל.</p>
+      
+      <div class="order-details" id="error-details" hidden>
+        <div class="detail-row">
+          <span class="detail-label">סיבה:</span>
+          <span class="detail-value" id="error-reason">—</span>
+        </div>
+      </div>
+
+      <p class="next-steps">אפשר לנסות שוב, או ליצור איתנו קשר אם הבעיה חוזרת.</p>
+      <div class="fail-buttons">
+        <a href="checkout.html" id="thanksbtn">נסה שוב</a>
+        <a href="https://wa.me/972507339541" class="contact-link">צור קשר בוואטסאפ</a>
+      </div>
     </div>
   </div>
 </main>
+
+<script>
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var response = params.get("Response");
+  var reasons = {
+    "001": "כרטיס חסום - פנה לחברת האשראי",
+    "002": "כרטיס גנוב",
+    "003": "פנה לחברת האשראי",
+    "004": "סירוב - פנה לחברת האשראי",
+    "005": "כרטיס מזויף",
+    "006": "מספר תעודת זהות שגוי",
+    "010": "הסכום חורג מהמותר",
+    "015": "אין כרטיס כזה",
+    "033": "כרטיס אשראי פג תוקף",
+    "036": "כרטיס מבוטל",
+    "039": "מספר כרטיס שגוי",
+    "173": "עסקה נדחתה ע\"י חברת האשראי"
+  };
+  
+  if (response && response !== "000") {
+    var el = document.getElementById("error-details");
+    el.hidden = false;
+    var reason = reasons[response] || "שגיאה כללית (קוד: " + response + ")";
+    document.getElementById("error-reason").textContent = reason;
+  }
+})();
+</script>
 
   <footer class="site-footer">
     <div class="footer-container">

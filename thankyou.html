@@ -3,18 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> תודה רבה</title>
+  <title>תודה רבה</title>
+  <script>
+    // Break out of iframe – but first copy sessionStorage data into the URL
+    // so it survives the top-level redirect
+    if (window.top !== window.self) {
+      var pending = sessionStorage.getItem("pending_order_email");
+      var url = window.location.href;
+      if (pending) {
+        var sep = url.indexOf("?") === -1 ? "?" : "&";
+        url += sep + "pending=" + encodeURIComponent(pending);
+        sessionStorage.removeItem("pending_order_email");
+      }
+      window.top.location.href = url;
+    }
+  </script>
   <link rel="stylesheet" href="thankyou.css" />
   <link rel="stylesheet" href="responsive.css" />
   <link href="https://fonts.googleapis.com/css2?family=Alef&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  <script src="thankyou.js" defer></script>
-
-
 </head>
 <body>
   <div class="Hero">
@@ -30,25 +38,109 @@
       <a href="contact.html" class="button">צור קשר</a>
       <a href="order.html" id="order">להזמנה</a>
     </nav> 
-  <div class="HeroTitle">
-    <a href="index.html" class="home-link">תמונה בריבוע</a><br>
-    <h2 class="SubTitle">זיכרונות יפים עטופים במגנט.<br> 
-      כי כל תמונה ראויה למקום משלה-<br>
-       על הדלת, על המקרר,
-    או סתם בזווית העין <br>
-     שתעשה לכם חיוך.</h2>
-  </div>
+    <div class="HeroTitle">
+      <a href="index.html" class="home-link">תמונה בריבוע</a><br>
+      <h2 class="SubTitle">זיכרונות יפים עטופים במגנט.<br> 
+        כי כל תמונה ראויה למקום משלה-<br>
+        על הדלת, על המקרר,
+        או סתם בזווית העין <br>
+        שתעשה לכם חיוך.</h2>
+    </div>
   </div>
 
 <main id="page-content">
   <div class="container">
     <div class="Content">
+      <div class="success-icon">&#10003;</div>
       <h1>תודה רבה!</h1>
-      <p>ההזמנה שלך התקבלה בהצלחה. ניצור קשר בהקדם.</p>
+      <p>התשלום בוצע בהצלחה וההזמנה שלך התקבלה.</p>
+      
+      <div class="order-details" id="order-details">
+        <div class="detail-row">
+          <span class="detail-label">מספר אישור:</span>
+          <span class="detail-value" id="confirmation-code">—</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">סכום ששולם:</span>
+          <span class="detail-value" id="payment-sum">—</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">שם:</span>
+          <span class="detail-value" id="contact-name">—</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">דוא"ל:</span>
+          <span class="detail-value" id="contact-email">—</span>
+        </div>
+      </div>
+
+      <p class="next-steps">ניצור איתך קשר בהקדם לתיאום המשלוח.<br>אישור נשלח לכתובת הדוא"ל שלך.</p>
       <a href="index.html" id="thanksbtn">חזרה לדף הבית</a>
     </div>
   </div>
 </main>
+
+<script>
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var code = params.get("ConfirmationCode") || params.get("auth_number");
+  var sum = params.get("sum");
+  var contact = params.get("contact");
+  var email = params.get("email");
+
+  if (code) document.getElementById("confirmation-code").textContent = code;
+  if (sum) document.getElementById("payment-sum").textContent = sum + " \u20AA";
+  if (contact) document.getElementById("contact-name").textContent = decodeURIComponent(contact);
+  if (email) document.getElementById("contact-email").textContent = decodeURIComponent(email);
+
+  // Send order confirmation email via EmailJS
+  var pendingRaw = params.get("pending") || sessionStorage.getItem("pending_order_email");
+  if (pendingRaw) {
+    try {
+      var pendingOrder = typeof pendingRaw === "string" ? JSON.parse(decodeURIComponent(pendingRaw)) : pendingRaw;
+      var orderId = pendingOrder.order_id || "";
+
+      if (!sessionStorage.getItem("order_email_sent_" + orderId)) {
+        emailjs.init({ publicKey: "ZlMWywxR4b4mdTC4K" });
+        // Enrich with payment confirmation data
+        pendingOrder.confirmation_code = code || "";
+        pendingOrder.payment_sum = sum || "";
+
+        // 1) Email to business owner
+        var ownerEmail = emailjs.send("service_kjsnnck", "template_xtvgubk", pendingOrder);
+
+        // 2) Email to customer – confirmation notification
+        // TODO: Enable when EmailJS plan allows a second template.
+        //       Create template with ID "template_customer_confirm" and
+        //       uncomment the block below. Template fields: to_email,
+        //       customer_name, order_id, confirmation_code, sum, order_description.
+        //
+        // var customerParams = {
+        //   to_email: pendingOrder.email || email || "",
+        //   customer_name: pendingOrder.customer_name || (contact ? decodeURIComponent(contact) : ""),
+        //   order_id: orderId,
+        //   confirmation_code: code || "",
+        //   sum: sum || "",
+        //   order_description: pendingOrder.order_description || "9 מגנטים בעיצוב אישי"
+        // };
+        // var customerEmail = emailjs.send("service_kjsnnck", "template_customer_confirm", customerParams);
+
+        Promise.all([ownerEmail])
+          .then(function() {
+            console.log("Both emails sent successfully");
+            sessionStorage.setItem("order_email_sent_" + orderId, "true");
+            sessionStorage.removeItem("pending_order_email");
+          })
+          .catch(function(err) {
+            console.error("Email send error:", err);
+          });
+      }
+    } catch (e) {
+      console.error("Error parsing pending order:", e);
+    }
+  }
+})();
+</script>
 
   <footer class="site-footer">
     <div class="footer-container">

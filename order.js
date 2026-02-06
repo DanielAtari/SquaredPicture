@@ -155,10 +155,12 @@ function openCropperWithDataUrl(dataUrl) {
 
 function cropImage() {
   if (!cropper || !currentBox) return;
-  const canvas = cropper.getCroppedCanvas({ width: 500, height: 500 });
+  const canvas = cropper.getCroppedCanvas({ width: 1080, height: 1080 });
   const img = document.createElement('img');
-  // שימוש ב-JPEG במקום PNG לחיסכון במקום
-  img.src = canvas.toDataURL('image/jpeg', 0.85);
+  // שמירת גרסה באיכות גבוהה להעלאה ל-Cloudinary
+  var hiRes = canvas.toDataURL('image/jpeg', 0.92);
+  img.src = hiRes;
+  img.dataset.hires = hiRes; // שמירת הגרסה האיכותית ב-data attribute
   currentBox.innerHTML = '';
   currentBox.appendChild(img);
 
@@ -238,44 +240,52 @@ async function handlePreview() {
   console.log("🚧 DEV_MODE:", DEV_MODE);
   
   const imageElements = document.querySelectorAll('.upload-box img');
-  const images = [];
+  const hiResImages = [];
+  const previewImages = [];
 
   imageElements.forEach(img => {
     if (img.src && !img.src.includes('placeholder')) {
-      images.push(img.src);
+      // Use high-res version from data attribute if available, otherwise use src
+      hiResImages.push(img.dataset.hires || img.src);
+      previewImages.push(img.src);
     }
   });
 
-  console.log("📷 Found images:", images.length);
+  console.log("📷 Found images:", hiResImages.length);
 
   // 🚧 במצב פיתוח - דילוג על בדיקת 9 תמונות
-  if (!DEV_MODE && images.length !== 9) {
+  if (!DEV_MODE && hiResImages.length !== 9) {
     alert("חובה להעלות בדיוק 9 תמונות לצורך ההזמנה.");
     return;
   }
   
-  if (images.length === 0) {
+  if (hiResImages.length === 0) {
     alert("לא נבחרו תמונות. העלה לפחות תמונה אחת.");
     return;
   }
 
-  // 🔄 דחיסת התמונות לפני שמירה (מונע QuotaExceededError)
-  console.log("🔄 Compressing images for storage...");
+  // 🔄 שמירה: גרסה דחוסה ל-sessionStorage (תצוגה מקדימה) + גרסה איכותית להעלאה
+  console.log("🔄 Preparing images for storage...");
   
   try {
-    const compressedImages = await Promise.all(images.map(img => compressImage(img, 350)));
-    console.log("✅ Images compressed");
+    // גרסה דחוסה לתצוגה מקדימה (קטנה - מתאימה ל-sessionStorage)
+    const compressedImages = await Promise.all(previewImages.map(img => compressImage(img, 400)));
+    console.log("✅ Preview images compressed");
     
-    // ניקוי ושמירה
+    // ניקוי ושמירה - תצוגה מקדימה
     sessionStorage.removeItem("uploadedImages");
     sessionStorage.setItem("uploadedImages", JSON.stringify(compressedImages));
+
+    // שמירת גרסאות באיכות גבוהה להעלאה ל-Cloudinary
+    sessionStorage.removeItem("uploadedImagesHiRes");
+    sessionStorage.setItem("uploadedImagesHiRes", JSON.stringify(hiResImages));
     
     // בדיקה שהשמירה הצליחה
     const verification = sessionStorage.getItem("uploadedImages");
     const savedCount = verification ? JSON.parse(verification).length : 0;
-    console.log("✅ Verification - saved", savedCount, "images, data size:", verification.length, "chars");
+    console.log("✅ Verification - saved", savedCount, "images");
     
-    if (savedCount !== images.length) {
+    if (savedCount !== hiResImages.length) {
       throw new Error("Image count mismatch after save");
     }
     

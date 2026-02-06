@@ -17,7 +17,9 @@ async function uploadToCloudinary(base64) {
 
 async function goToPayment() {
   try {
-    const images = JSON.parse(sessionStorage.getItem("uploadedImages")) || [];
+    // Use high-res images for Cloudinary upload, fall back to regular images
+    const hiResImages = JSON.parse(sessionStorage.getItem("uploadedImagesHiRes")) || [];
+    const images = hiResImages.length > 0 ? hiResImages : (JSON.parse(sessionStorage.getItem("uploadedImages")) || []);
 
     // 🚧 במצב פיתוח - דילוג על בדיקת 9 תמונות
     if (!DEV_MODE && images.length !== 9) {

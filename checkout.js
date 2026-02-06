@@ -1,4 +1,4 @@
-const TRANZILA_ENDPOINT = "https://directng.tranzila.com/fxproey2909/iframenew.php";
+const TRANZILA_IFRAME_PROXY = "/tranzila/iframe";
 // Tranzila currency: usually "1" for ILS (adjust if your account differs).
 const TRANZILA_CURRENCY = "1";
 const TRANZILA_TRANMODE = "A";
@@ -6,8 +6,10 @@ const TRANZILA_LANG = "il";
 const TRANZILA_COUNTRY = "Israel";
 const TRANZILA_CRED_TYPE = "1";
 const TRANZILA_PDESC = "9 magnets";
+const TRANZILA_NEW_PROCESS = "1";
 
-const TEST_MODE = true;
+const TEST_MODE = false;
+const SKIP_PAYMENT = false; // true = דילוג על תשלום לבדיקה. שנה ל-false לפרודקשן!
 const TEST_AMOUNT = 1;
 const ORDER_PRICE = 129;
 const IFRAME_LOAD_TIMEOUT_MS = 12000;
@@ -111,7 +113,7 @@ function validateTranzilaParams(params) {
   if (!params.city) missing.push("city");
   if (!params.zip) missing.push("zip");
   if (!TRANZILA_TRANMODE) missing.push("tranmode");
-  if (!TRANZILA_ENDPOINT) missing.push("endpoint");
+  if (!TRANZILA_IFRAME_PROXY) missing.push("endpoint");
 
   if (missing.length > 0) {
     showPaymentError(`חסרים פרמטרים לתשלום: ${missing.join(", ")}`);
@@ -143,14 +145,34 @@ function fillTranzilaForm(params) {
   setValue("tranzila-remarks", params.notes || "");
   setValue("tranzila-cred-type", TRANZILA_CRED_TYPE);
   setValue("tranzila-tranmode", TRANZILA_TRANMODE);
+  setValue("tranzila-new-process", TRANZILA_NEW_PROCESS);
   setValue("tranzila-lang", TRANZILA_LANG);
-  setValue("tranzila-success-url", getAbsoluteUrl("thankyou.html"));
-  setValue("tranzila-fail-url", getAbsoluteUrl("payment-fail.html"));
+  setValue("tranzila-success-url", getAbsoluteUrl("tranzila/success"));
+  setValue("tranzila-fail-url", getAbsoluteUrl("tranzila/fail"));
 
   const form = document.getElementById("tranzila-form");
   if (form) {
-    form.action = TRANZILA_ENDPOINT;
+    form.action = TRANZILA_IFRAME_PROXY;
   }
+
+  const debugPayload = {
+    sum: params.price,
+    currency: TRANZILA_CURRENCY,
+    contact: params.full_name,
+    company: params.company,
+    email: params.email,
+    phone: params.phone,
+    country: params.country,
+    address: params.address,
+    city: params.city,
+    zip: params.zip,
+    tranmode: TRANZILA_TRANMODE,
+    cred_type: TRANZILA_CRED_TYPE,
+    lang: TRANZILA_LANG,
+    success_url_address: getAbsoluteUrl("tranzila/success"),
+    fail_url_address: getAbsoluteUrl("tranzila/fail")
+  };
+  console.log("Tranzila debug payload:", debugPayload);
 }
 
 function storePendingOrder(params) {
@@ -262,25 +284,109 @@ async function prepareOrderData() {
   ============================================================================
 */
 
+// ▶️ ניקוי שגיאות כשהמשתמש מקליד
+document.querySelectorAll("#full-name, #address, #city, #zip, #phone, #email").forEach(input => {
+  input.addEventListener("input", function () {
+    this.classList.remove("input-error");
+    const errMsg = this.parentElement.querySelector(".field-error-msg");
+    if (errMsg) errMsg.remove();
+  });
+});
+
 // ▶️ לחיצה על "שלח הזמנה"
 const continueBtn = document.getElementById("continue-button");
 if (continueBtn) {
   continueBtn.addEventListener("click", async function () {
-    const fullName = document.getElementById("full-name").value.trim();
-    const address = document.getElementById("address").value.trim();
-    const city = document.getElementById("city").value.trim();
-    const zip = document.getElementById("zip").value.trim();
-    const phone = document.getElementById("phone").value.trim();
-    const email = document.getElementById("email").value.trim();
+    // --- Gather field values ---
+    const fields = {
+      "full-name": document.getElementById("full-name"),
+      "address":   document.getElementById("address"),
+      "city":      document.getElementById("city"),
+      "zip":       document.getElementById("zip"),
+      "phone":     document.getElementById("phone"),
+      "email":     document.getElementById("email"),
+    };
+
+    const fullName = fields["full-name"].value.trim();
+    const address  = fields["address"].value.trim();
+    const city     = fields["city"].value.trim();
+    const zip      = fields["zip"].value.trim();
+    const phone    = fields["phone"].value.trim();
+    const email    = fields["email"].value.trim();
     const checkbox = document.getElementById("terms-checkbox");
 
-    if (!fullName || !address || !city || !zip || !phone || !email) {
-      alert("אנא מלא את כל שדות החובה.");
-      return;
-    }
+    // --- Clear previous validation errors ---
+    Object.values(fields).forEach(el => {
+      el.classList.remove("input-error");
+      const prev = el.parentElement.querySelector(".field-error-msg");
+      if (prev) prev.remove();
+    });
+    // Also clear terms error
+    const prevTermsErr = document.querySelector(".terms-error-msg");
+    if (prevTermsErr) prevTermsErr.remove();
+
+    // --- Validation rules ---
+    const validationRules = [
+      {
+        field: "full-name",
+        test: !fullName || fullName.length < 2,
+        message: "יש להזין שם מלא (לפחות 2 תווים)"
+      },
+      {
+        field: "address",
+        test: !address || address.length < 3,
+        message: "יש להזין כתובת מלאה (רחוב ומספר)"
+      },
+      {
+        field: "city",
+        test: !city || city.length < 2,
+        message: "יש להזין שם עיר"
+      },
+      {
+        field: "zip",
+        test: !zip || !/^\d{5,7}$/.test(zip),
+        message: "יש להזין מיקוד תקין (5-7 ספרות)"
+      },
+      {
+        field: "phone",
+        test: !phone || !/^0\d{8,9}$/.test(phone.replace(/[-\s]/g, "")),
+        message: "יש להזין מספר טלפון ישראלי תקין (למשל 050-1234567)"
+      },
+      {
+        field: "email",
+        test: !email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email),
+        message: "יש להזין כתובת אימייל תקינה"
+      }
+    ];
+
+    let hasErrors = false;
+
+    validationRules.forEach(rule => {
+      if (rule.test) {
+        hasErrors = true;
+        const el = fields[rule.field];
+        el.classList.add("input-error");
+        // Add inline error message below the field
+        const errSpan = document.createElement("span");
+        errSpan.className = "field-error-msg";
+        errSpan.textContent = rule.message;
+        el.parentElement.insertBefore(errSpan, el.nextSibling);
+      }
+    });
 
     if (!checkbox.checked) {
-      alert("יש לאשר את תנאי השימוש.");
+      hasErrors = true;
+      const termsLabel = checkbox.closest(".checkbox-container");
+      const errSpan = document.createElement("span");
+      errSpan.className = "field-error-msg terms-error-msg";
+      errSpan.textContent = "יש לאשר את תנאי השימוש";
+      termsLabel.parentElement.insertBefore(errSpan, termsLabel.nextSibling);
+    }
+
+    if (hasErrors) {
+      // Scroll to first error
+      const firstErr = document.querySelector(".input-error, .terms-error-msg");
+      if (firstErr) firstErr.scrollIntoView({ behavior: "smooth", block: "center" });
       return;
     }
 
@@ -293,6 +399,20 @@ if (continueBtn) {
     const params = await prepareOrderData();
 
     if (params) {
+      // SKIP_PAYMENT: דילוג על תשלום – מעבר ישיר לעמוד התודה לצורך בדיקה
+      if (SKIP_PAYMENT) {
+        const thankYouParams = new URLSearchParams({
+          ConfirmationCode: "TEST-0000",
+          sum: String(params.price),
+          contact: params.customer_name || "",
+          email: params.email || "",
+          index: "0",
+          pending: sessionStorage.getItem("pending_order_email") || ""
+        });
+        window.location.href = "/thankyou.html?" + thankYouParams.toString();
+        return;
+      }
+
       if (!validateTranzilaParams(params)) {
         this.disabled = false;
         this.textContent = "שלח הזמנה";
