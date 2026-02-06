@@ -1,4 +1,5 @@
 [build]
+  command = "# no build step needed for static site"
   publish = "."
   functions = "netlify/functions"
 

@@ -19,3 +19,8 @@ info/
 
 node_modules
 .env
+
+# Local dev server (not needed on Netlify)
+server.js
+package.json
+package-lock.json
