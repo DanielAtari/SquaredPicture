@@ -2,18 +2,15 @@
   publish = "."
   functions = "netlify/functions"
 
-# Route /tranzila/* to serverless functions
-[[redirects]]
-  from = "/tranzila/iframe"
-  to = "/.netlify/functions/tranzila-iframe"
-  status = 200
-
+# Route Tranzila callbacks to serverless functions
 [[redirects]]
   from = "/tranzila/success"
   to = "/.netlify/functions/tranzila-success"
   status = 200
+  force = true
 
 [[redirects]]
   from = "/tranzila/fail"
   to = "/.netlify/functions/tranzila-fail"
   status = 200
+  force = true

@@ -1,4 +1,4 @@
-const TRANZILA_IFRAME_PROXY = "/tranzila/iframe";
+const TRANZILA_IFRAME_PROXY = "/.netlify/functions/tranzila-iframe";
 // Tranzila currency: usually "1" for ILS (adjust if your account differs).
 const TRANZILA_CURRENCY = "1";
 const TRANZILA_TRANMODE = "A";
